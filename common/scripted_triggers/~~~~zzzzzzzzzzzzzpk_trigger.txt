@@ -72,7 +72,7 @@ can_destroy_planet_with_PLANET_KILLER_CRACKER = {
 				NOT = { exists = space_owner }
 				AND = {
 					exists = space_owner
-					space_owner = { is_same_empire = from.owner }
+					is_owned_by = from.owner
 				}
 			}
 			OR = {
@@ -229,7 +229,7 @@ can_destroy_planet_with_PLANET_KILLER_GODRAY = {
 			}
 			AND = {
 				exists = owner
-				owner = { is_same_empire = from.owner }
+				is_owned_by = from.owner
 			}
 		}
 	}
@@ -260,14 +260,14 @@ can_destroy_planet_with_PLANET_KILLER_GODRAY = {
 			}
 			exists = owner
 			owner = {
-				is_same_value = from.owner
+				is_same_empire = from.owner
 			}
 		}
 		custom_tooltip = {
 			text = not_owned_test_fire
 			exists = owner
 			owner = {
-				is_same_value = from.owner
+				is_same_empire = from.owner
 			}
 		}
 	}
@@ -308,7 +308,7 @@ can_destroy_planet_with_PLANET_KILLER_NANOBOTS = {
 		custom_tooltip = {
 			fail_text = primitives_not_in_borders
 			exists = space_owner
-			space_owner = { is_same_empire = from.owner }
+			is_owned_by = from.owner
 		}
 		custom_tooltip = {
 			fail_text = primitives_not_full_interference
@@ -348,7 +348,7 @@ can_destroy_planet_with_PLANET_KILLER_DELUGE = {
 		if = {
 			limit = { #Uninhabited and primitive planets are always fine, if own colony then check if pops would be purged
 				exists = owner
-				owner = { is_same_value = from.owner }
+				is_owned_by = from.owner
 				any_owned_species = {
 					NOT = { has_trait = trait_aquatic }
 				}
@@ -385,7 +385,7 @@ can_destroy_planet_with_PLANET_KILLER_DELUGE = {
 		custom_tooltip = {
 			fail_text = primitives_not_in_borders
 			exists = space_owner
-			space_owner = { is_same_value = from.owner }
+			is_owned_by = from.owner
 		}
 		custom_tooltip = {
 			fail_text = primitives_not_full_interference
@@ -432,7 +432,7 @@ can_destroy_planet_with_PLANET_KILLER_EOE = {
 		custom_tooltip = {
 			fail_text = primitives_not_in_borders
 			exists = space_owner
-			space_owner = { is_same_empire = from.owner }
+			is_owned_by = from.owner
 		}
 	}
 	custom_tooltip = {
@@ -516,7 +516,7 @@ can_destroy_planet_with_PLANET_KILLER_FIRE_EOE = {
 					NOT = { exists = space_owner }
 					AND = {
 						exists = space_owner
-						space_owner = { is_same_empire = from.owner }
+						is_owned_by = from.owner
 					}
 				}
 				OR = {
@@ -554,7 +554,7 @@ can_destroy_planet_with_PLANET_KILLER_Ark_CRACKER = {
 		OR = {
 			NOT = { exists = space_owner }
 			space_owner = { is_hostile = from.owner }
-			space_owner = { is_same_empire = from.owner }
+			is_owned_by = from.owner
 		}
 	}
 }
@@ -588,7 +588,7 @@ can_destroy_planet_with_PLANET_KILLER_JUMP_ADF = {
 								is_country_type = extradimensional_2
 								is_country_type = extradimensional_3
 								is_country_type = ai_empire
-								is_same_value = from.owner # added condition if you own it								  
+								is_same_empire = from.owner # added condition if you own it								  
 							}
 						}
 					}
@@ -602,7 +602,7 @@ can_destroy_planet_with_PLANET_KILLER_JUMP_ADF = {
 								is_country_type = extradimensional_2
 								is_country_type = extradimensional_3
 								is_country_type = ai_empire
-								is_same_value = from.owner # added condition if you own it								  
+								is_same_empire = from.owner # added condition if you own it								  
 							}
 						}
 					}
@@ -620,7 +620,7 @@ can_destroy_planet_with_PLANET_KILLER_JUMP_ADF = {
 								is_country_type = extradimensional_2
 								is_country_type = extradimensional_3
 								is_country_type = ai_empire
-								is_same_value = from.owner # added condition if you own it								  
+								is_same_empire = from.owner # added condition if you own it								  
 							}
 						}
 					}
@@ -687,7 +687,7 @@ can_destroy_planet_with_ag_ancient_epsilon_planet_killer_weapon = {
 					}
 				}
 				exists = owner
-				owner = { is_same_value = from.owner }
+				is_owned_by = from.owner
 			}
 		}
 	}
@@ -793,7 +793,7 @@ can_destroy_planet_with_PLANET_KILLER_SPORE_DISPERSAL = {
 			custom_tooltip = {
 				fail_text = primitives_not_in_borders
 				exists = space_owner
-				space_owner = { is_country = FROM.owner }
+				is_owned_by = FROM.owner
 			}
 		}
 		# planets owned by the attacker are targetable if they have any pops that can be necrophaged
@@ -859,7 +859,7 @@ can_destroy_planet_with_PLANET_KILLER_OVO = {
 			}
 			AND = {
 				exists = owner
-				owner = { is_same_value = from.owner }
+				is_owned_by = from.owner
 			}
 		}
 	}
@@ -875,14 +875,14 @@ can_destroy_planet_with_PLANET_KILLER_OVO = {
 			}
 			exists = owner
 			owner = {
-				is_same_value = from.owner
+				is_same_empire = from.owner
 			}
 		}
 		custom_tooltip = {
 			text = not_owned_test_fire
 			exists = owner
 			owner = {
-				is_same_value = from.owner
+				is_same_empire = from.owner
 			}
 		}
 	}
@@ -940,14 +940,14 @@ can_destroy_planet_with_PLANET_KILLER_PSH = {
 			}
 			exists = owner
 			owner = {
-				is_same_value = from.owner
+				is_same_empire = from.owner
 			}
 		}
 		custom_tooltip = {
 			text = not_owned_test_fire
 			exists = owner
 			owner = {
-				is_same_value = from.owner
+				is_same_empire = from.owner
 			}
 		}
 	}
@@ -988,7 +988,7 @@ can_destroy_planet_with_PLANET_KILLER_CM = {
 		custom_tooltip = {
 			fail_text = primitives_not_in_borders
 			exists = space_owner
-			space_owner = { is_same_value = from.owner }
+			is_owned_by = from.owner
 		}
 	}
 	custom_tooltip = {
@@ -1016,7 +1016,7 @@ can_destroy_planet_with_PLANET_KILLER_SK = {
 		OR = {
 			NOT = { exists = space_owner }
 			space_owner = { is_hostile = from.owner }
-			space_owner = { is_same_value = from.owner }
+			is_owned_by = from.owner
 		}
 	}
 	custom_tooltip = {
@@ -1024,7 +1024,7 @@ can_destroy_planet_with_PLANET_KILLER_SK = {
 		NOT = { solar_system = {
 			any_system_planet = {
 				exists = owner
-				owner = { is_same_value = from.owner }
+				is_owned_by = from.owner
 			}
 		}}
 	}
@@ -1088,7 +1088,7 @@ can_destroy_planet_with_PLANET_KILLER_WATERB = {
 						NOT = { exists = space_owner }
 						AND = {
 							exists = space_owner
-							space_owner = { is_same_value = from.owner }
+							is_owned_by = from.owner
 						}
 					}
 					OR = {
@@ -1176,7 +1176,7 @@ wg_event_can_destroy_planet_with_PLANET_KILLER_CRACKER = {
 					NOT = { exists = space_owner }
 					AND = {
 						exists = space_owner
-						space_owner = { is_same_value = root.owner }
+						is_owned_by = root.owner
 					}
 				}
 				OR = {
@@ -1256,7 +1256,7 @@ can_destroy_planet_with_PLANET_KILLER_EDEN = {
 			}
 			AND = {
 				exists = owner
-				owner = { is_same_value = from.owner }
+				is_owned_by = from.owner
 			}
 		}
 	}
@@ -1268,7 +1268,7 @@ can_destroy_planet_with_PLANET_KILLER_EDEN = {
 		custom_tooltip = {
 			fail_text = primitives_not_in_borders
 			exists = space_owner
-			space_owner = { is_same_value = from.owner }
+			is_owned_by = from.owner
 		}
 	}
 	custom_tooltip = {
@@ -1334,7 +1334,7 @@ can_destroy_planet_with_TC_PLANET_KILLER_EXCAVATION = {
 					fail_text = "tc_planet_killer_excavation_our_planet"
 					NOT = { exists = owner }
 					exists = space_owner
-					space_owner = { is_same_value = from.owner }
+					is_owned_by = from.owner
 				}
 			}
 			AND = {
@@ -1419,7 +1419,7 @@ can_destroy_planet_with_TC_PLANET_KILLER_EXCAVATION_TURRET = {
 					fail_text = "tc_planet_killer_excavation_our_planet"
 					NOT = { exists = owner }
 					exists = space_owner
-					space_owner = { is_same_value = from.owner }
+					is_owned_by = from.owner
 				}
 			}
 			#敌对殖民地
@@ -2057,7 +2057,7 @@ can_destroy_planet_with_PLANET_KILLER_SM_CRYORAY = {
 		if = {
 			limit = { #Uninhabited and primitive planets are always fine, if own colony then check if pops would be purged
 				exists = owner
-				owner = { is_same_value = from.owner }
+				is_owned_by = from.owner
 				any_owned_species = {
 					NOR = { 
 						has_trait = trait_sm_cryogenesis_machine
@@ -2097,7 +2097,7 @@ can_destroy_planet_with_PLANET_KILLER_SM_CRYORAY = {
 		custom_tooltip = {
 			fail_text = primitives_not_in_borders
 			exists = space_owner
-			space_owner = { is_same_value = from.owner }
+			is_owned_by = from.owner
 		}
 		custom_tooltip = {
 			fail_text = primitives_not_full_interference
@@ -2182,7 +2182,7 @@ can_destroy_planet_with_planet_killer_kancolle_kari = {
 					NOT = { exists = space_owner }
 					AND = {
 						exists = space_owner
-						space_owner = { is_same_value = from.owner }
+						is_owned_by = from.owner
 					}
 				}
 				OR = {
@@ -2215,7 +2215,7 @@ can_destroy_planet_with_planet_killer_kancolle_water_world = {
 		if = {
 			limit = { #Uninhabited and primitive planets are always fine, if own colony then check if pops would be purged
 				exists = owner
-				owner = { is_same_value = from.owner }
+				is_owned_by = from.owner
 				any_owned_species = {
 					NOT = { has_trait = trait_aquatic }
 				}
@@ -2252,7 +2252,7 @@ can_destroy_planet_with_planet_killer_kancolle_water_world = {
 		custom_tooltip = {
 			fail_text = primitives_not_in_borders
 			exists = space_owner
-			space_owner = { is_same_value = from.owner }
+			is_owned_by = from.owner
 		}
 		custom_tooltip = {
 			fail_text = primitives_not_full_interference

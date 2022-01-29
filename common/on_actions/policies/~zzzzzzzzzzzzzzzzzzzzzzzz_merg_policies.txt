@@ -1116,8 +1116,7 @@ war_philosophy = {
 	potential = {
 		OR = {
 			merg_is_default_empire = yes
-			is_country_type = fallen_empire
-			is_country_type = awakened_fallen_empire
+			is_fallen_empire = yes
 			# Star Wars: Kuat Ancient Empire
 			is_country_type = kuat_fallen_empire
 			is_country_type = kuat_awakened_fallen_empire
@@ -1303,9 +1302,7 @@ war_philosophy = {
 		valid = {
 			NOR = {
 				has_ethic = "ethic_fanatic_militarist"
-				has_valid_civic = "civic_fanatic_purifiers"
-				has_valid_civic = "civic_hive_devouring_swarm"
-				has_valid_civic = "civic_machine_terminator"
+				is_homicidal = yes
 			}
 		}
 		AI_weight = {
@@ -1461,8 +1458,7 @@ war_doctrine = {
 
 		valid = {
 			OR = {
-				has_ethic = ethic_militarist
-				has_ethic = ethic_fanatic_militarist
+				is_militarist = yes
 				has_ethic = ethic_gestalt_consciousness
 				has_civic = civic_fanatic_purifiers
 			}
@@ -1931,9 +1927,7 @@ border_policy = {
 		valid = {
 			merg_is_default_empire = yes
 			NOR = {
-				has_valid_civic = civic_machine_terminator
-				has_valid_civic = civic_hive_devouring_swarm
-				has_valid_civic = civic_fanatic_purifiers
+				is_homicidal = yes
 				# Ethics and Civics mods but not Redux
                 AND = {
 					OR = {
@@ -2013,8 +2007,10 @@ purge = {
 		name = "purge_not_allowed"
 
 		valid = {
-			NOT = { has_ethic = ethic_gestalt_consciousness }
-			NOT = { has_valid_civic = "civic_fanatic_purifiers" }
+			NOR = {
+				has_ethic = ethic_gestalt_consciousness
+				has_valid_civic = "civic_fanatic_purifiers"
+			}
 		}
 
 		policy_flags = {
@@ -2032,10 +2028,7 @@ purge = {
 		modifier = {}
 
 		valid = {
-			NOR = {
-				has_ethic = ethic_xenophile
-				has_ethic = ethic_fanatic_xenophile
-			}
+			is_xenophile = no
 			is_homicidal = no
 		}
 
@@ -2072,8 +2065,7 @@ purge = {
 			}
 			OR = {
 				has_ethic = ethic_gestalt_consciousness
-				has_ethic = ethic_xenophobe
-				has_ethic = ethic_fanatic_xenophobe
+				is_xenophobe = yes
 				has_menace_perk = menp_undertaker	# Unlocked with Crisis Level 1
 				# ZOFE
 				is_country_type = ascended_empire
@@ -2097,10 +2089,7 @@ purge = {
 			}
 			modifier = {
 				factor = 0
-				OR = {
-					has_ethic = ethic_pacifist
-					has_ethic = ethic_fanatic_pacifist
-				}
+				is_pacifist = yes
 			}
 			modifier = {
 				factor = 0

@@ -43,9 +43,7 @@ shadowgate_is_ae = {
 shadowgate_is_purifier = {
     OR = {
         has_country_flag = shadowgate_ap_restricted
-        has_valid_civic = civic_fanatic_purifiers
-        has_valid_civic = civic_machine_terminator
-        has_valid_civic = civic_hive_devouring_swarm
+        is_homicidal = yes
 		# Underground Realms
 		has_country_flag = dark_side
 		# Expanded Traits, Civics, Pops, and More
@@ -252,7 +250,7 @@ starborn_can_place_hab = {
 	}
 	custom_tooltip = {
 		fail_text = "requires_no_anomaly"
-		NOT = { has_anomaly = yes }
+		has_anomaly = no
 	}
 	custom_tooltip = {
 		fail_text = "requires_no_existing_megastructure"

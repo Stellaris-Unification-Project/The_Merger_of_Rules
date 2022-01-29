@@ -50,9 +50,9 @@ can_add_claim = {
 					# Expanded Traits, Civics, Pops, and More
 					AND = {
 						has_expanded_pops = yes
-						OR = {
-							NOT = { has_valid_civic = civic_closed_collective }
-							NOT = { has_valid_civic = civic_closed_network }
+						NAND = {
+							has_valid_civic = civic_closed_collective
+							has_valid_civic = civic_closed_network
 						}
 					}
 				}
@@ -90,8 +90,7 @@ can_add_claim = {
 			owner = {
 				NOR = {
 					merg_is_default_empire = yes
-					is_country_type = fallen_empire
-					is_country_type = awakened_fallen_empire
+					is_fallen_empire = yes
 					# ACOT
 					is_country_type = original_empire_active
 					is_country_type = sofe_light_seeker					
@@ -153,9 +152,7 @@ can_add_claim = {
 			exists = owner
 			owner = {
 				OR = {
-					has_valid_civic = civic_hive_devouring_swarm
-					has_valid_civic = civic_fanatic_purifiers
-					has_valid_civic = civic_machine_terminator
+					is_homicidal = yes
 					has_valid_civic = civic_machine_assimilator
 					# Expanded Traits, Civics, Pops, and More
 					has_valid_civic = civic_infestation
@@ -163,9 +160,7 @@ can_add_claim = {
 			}
 			root = {
 				NOR = {
-					has_valid_civic = civic_hive_devouring_swarm
-					has_valid_civic = civic_fanatic_purifiers
-					has_valid_civic = civic_machine_terminator
+					is_homicidal = yes
 					has_valid_civic = civic_machine_assimilator
 					# Expanded Traits, Civics, Pops, and More
 					has_valid_civic = civic_infestation
@@ -182,8 +177,7 @@ can_get_claim_from_lost_system = {
 		fail_text = CANNOT_ADD_CLAIM_NOT_VALID_EMPIRE
 		OR = {
 			merg_is_default_empire = yes
-			is_country_type = fallen_empire
-			is_country_type = awakened_fallen_empire
+			is_fallen_empire = yes
 			# ACOT
 			is_country_type = ascended_empire
 			is_country_type = original_empire_active
@@ -192,8 +186,7 @@ can_get_claim_from_lost_system = {
 		root = {
 			OR = {
 				merg_is_default_empire = yes
-				is_country_type = fallen_empire
-				is_country_type = awakened_fallen_empire
+				is_fallen_empire = yes
 				# ACOT
 				is_country_type = ascended_empire
 				is_country_type = original_empire_active
@@ -320,8 +313,7 @@ species_can_live_on_planet = {
 	NAND = {
 		root = { 
 			OR = {
-			is_planet_class = pc_habitat 
-			is_planet_class = pc_ringworld_habitable
+			is_artificial = yes
 			is_planet_class = pc_relic
 			is_planet_class = pc_milarc_relic
 			is_planet_class = pc_pd_barren_hab
@@ -375,8 +367,7 @@ species_can_live_on_planet = {
 	NAND = {
 		root = { 
 			OR = {
-				is_planet_class = pc_habitat
-				is_planet_class = pc_ringworld_habitable
+				is_artificial = yes
 				is_planet_class = pc_relic
 				is_planet_class = pc_milarc_relic
 				is_planet_class = pc_pd_barren_hab
@@ -438,8 +429,7 @@ species_can_live_on_planet = {
 	NAND = {
 		root = { 
 			OR = {
-				is_planet_class = pc_habitat 
-				is_planet_class = pc_ringworld_habitable
+				is_artificial = yes
 				is_planet_class = pc_relic
 				is_planet_class = pc_milarc_relic
 				is_planet_class = pc_pd_barren_hab
@@ -502,8 +492,7 @@ species_can_live_on_planet = {
 	NAND = {
 		root = { 
 			OR = {
-				is_planet_class = pc_habitat 
-				is_planet_class = pc_ringworld_habitable
+				is_artificial = yes
 				is_planet_class = pc_relic 
 				is_planet_class = pc_milarc_relic
 				is_planet_class = pc_pd_barren_hab
@@ -571,8 +560,7 @@ species_can_live_on_planet = {
 	NAND = {
 		root = { 
 			OR = {
-				is_planet_class = pc_habitat 
-				is_planet_class = pc_ringworld_habitable
+				is_artificial = yes
 				is_planet_class = pc_relic 
 				is_planet_class = pc_milarc_relic
 				is_planet_class = pc_pd_barren_hab
