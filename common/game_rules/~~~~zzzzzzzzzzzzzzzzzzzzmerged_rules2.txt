@@ -1,0 +1,3038 @@
+
+#Checks whether any leaders (scientists etc) can be formed from this pop
+#Root = country
+#This = pop
+can_generate_leader_from_pop = {
+	OR = {
+		has_citizenship_rights = yes
+		# Holofrixit Revisited / Silfae's Portraits: Revisited
+		species = {
+			has_species_flag = allow_leaders_organic_advisors@prev.owner
+			has_citizenship_type = {
+				type = citizenship_organic_trophy
+				country = prev.owner
+			}
+		}
+	}
+	NOR = {
+		has_trait = trait_syncretic_proles
+		has_trait = trait_nerve_stapled
+		has_trait = trait_zombie
+		# Rogue Maid (Rogue Servitor Completely Remake)
+		has_trait = trait_working_machine
+		# Plentiful Perks
+		has_trait = trait_plentiful_traditions_pt_cocoon
+		# Ethics & Civics: Bug Branch/Redux
+		has_trait = trait_slave_gene
+		# Expanded Events / Expanded Traits, Civics, Pops, and More
+		has_trait = trait_memorex_comatos
+		has_trait = trait_infested_basic
+		has_trait = trait_tree_caretaker
+		# Holofrixit Revisited / Silfae's Portraits: Revisited
+		has_trait = trait_holodrone
+		# Expanded Gestalts
+		root = { has_origin = origin_hive_overmind }
+		# Diagraphers Trait Mod
+		has_trait = trait_subsapient_form
+		has_trait = trait_living_architecture
+	}
+	OR = {
+		is_robot_pop = no
+		root = {
+			OR = {
+				has_technology = tech_synthetic_leaders
+				has_authority = auth_machine_intelligence
+				is_mechanical_empire = yes
+			}
+		}
+		# Holofrixit Revisited / Silfae's Portraits: Revisited
+		ROOT = {
+			has_origin = origin_holofrixit
+			PREV.species = {
+				OR = {
+					NOT = { has_trait = trait_holofrixit }
+					has_trait = trait_holooverseer
+					has_trait = trait_hologanglion
+					has_trait = trait_holowarrior
+					has_trait = trait_holowarrior_2
+				}
+			}
+		}
+	}
+	OR = {
+		is_same_species = root
+		root = {
+			NAND = {
+				has_origin = origin_necrophage
+				has_trait = trait_necrophage
+			}
+		}
+	}
+}
+
+#Checks whether this species is eligible to become rulers through elections
+#Root = country
+#This = species
+can_generate_leader_from_species = {
+	is_sapient = yes
+	OR = {
+		NAND = {
+			NOT = { root = { has_technology = "tech_synthetic_leaders" } }
+			has_trait = "trait_mechanical"
+		}
+		has_citizenship_type = { type = citizenship_full country = root }
+		# ThaumStellaris
+		NOT = { has_trait = "tc_trait_golem" }
+	}
+}
+
+# can_create_espionage_asset_from_species
+
+#Root = country
+#This = pop
+can_generate_military_leader_from_pop = {
+	can_be_military_leader = yes
+	OR = {
+		is_robot_pop = no
+		root = {
+			OR = {
+				has_technology = tech_synthetic_leaders
+				has_authority = auth_machine_intelligence
+				is_mechanical_empire = yes
+				# Holofrixit Revisited / Silfae's Portraits: Revisited
+				AND = {
+					has_origin = origin_holofrixit
+					PREV.species = {
+						OR = {
+							has_trait = trait_holowarrior
+							has_trait = trait_holowarrior_2
+						}
+					}
+				}
+			}
+		}
+	}
+	OR = {
+		is_same_species = root
+		root = {
+			NAND = {
+				has_origin = origin_necrophage
+				has_trait = trait_necrophage
+			}
+		}
+	}
+	# Expanded Gestalts
+	NOT = { root = { has_origin = origin_hive_overmind } }
+}
+
+# can_generate_army_from_planet
+
+#Root = planet
+#This = country
+can_release_vassal = {
+	hidden_trigger = {
+		if = {
+			limit = {
+				has_expanded_pops = yes
+			}
+			always = yes
+		}
+	}
+	custom_tooltip = {
+		fail_text = default
+		NOT = { has_valid_civic = civic_fanatic_purifiers }
+	}
+	custom_tooltip = {
+		fail_text = default
+		NOT = { has_valid_civic = civic_machine_terminator }
+	}
+	custom_tooltip = {
+		fail_text = default
+		NOT = { has_valid_civic = civic_machine_assimilator }
+	}
+	custom_tooltip = {
+		fail_text = default
+		NOT = { has_valid_civic = civic_hive_devouring_swarm }
+	}
+	# ACOT
+	custom_tooltip = {
+		fail_text = default
+		NOT = { is_country_type = ascended_empire }
+	}
+	custom_tooltip = {
+		fail_text = default
+		NOT = { is_country_type = original_empire_active }
+	}	
+}
+
+#Root = species
+#This = country
+can_release_vassal_from_species = {
+	root = {
+		is_sapient = yes
+		NOR = {
+			has_trait = trait_machine_unit
+			has_trait = trait_hive_mind
+			has_trait = trait_mechanical
+			has_trait = trait_nerve_stapled
+			has_trait = trait_zombie
+			# Plentiful Perks
+			has_trait = trait_plentiful_traditions_pt_cocoon
+			# Expanded Events / Expanded Traits, Civics, Pops, and More
+			has_trait = trait_memorex_comatos
+			has_trait = trait_infested_basic
+			has_trait = trait_tree_caretaker
+			AND = {
+				has_expanded_pops = yes
+				prev = { NOT = { has_technology = tech_synthetic_leaders } }
+				has_trait = trait_mechanical
+			}
+		}
+		if = {
+			limit = {
+				has_expanded_pops = yes
+				prev = {
+					OR = {
+						has_valid_civic = civic_fanatic_purifiers
+						has_valid_civic = civic_machine_assimilator
+						has_valid_civic = civic_hive_devouring_swarm
+					}
+				}
+			}
+			is_same_species = prev
+		}
+		if = {
+			limit = {
+				has_expanded_pops = yes
+				prev = { has_authority = auth_machine_intelligence }
+			}
+			OR = {
+				has_trait = trait_machine_unit
+				has_citizenship_rights = yes
+				has_citizenship_type = { type = citizenship_limited }
+			}
+		}
+		if = {
+			limit = {
+				has_expanded_pops = yes
+				prev = { has_authority = auth_hive_mind }
+			}
+			OR = {
+				has_trait = trait_hive_mind
+				has_citizenship_rights = yes
+				has_citizenship_type = { type = citizenship_limited }
+			}
+		}
+	}
+}
+
+# can_generate_army_from_species
+# can_modify_species
+
+#This = country, suject
+#Root = country, overlord
+#From = target solar system
+#This rule is a condition for when subjects that normally cannot colonize outside their borders are allowed to
+subject_can_expand = {
+	# Exalted domination totally disallow vassal expansion
+	has_exalted_domination = no
+	root = {
+		OR = {
+			has_valid_civic = civic_feudal_realm
+			# Expanded Traits, Civics, Pops, and More
+			has_policy_flag = vassal_expansion_allowed
+		}
+	}
+}
+
+#Root = country, attacker
+#This = country, target
+#This rule is a condition for taking hostile actions towards neutral targets. Such as landing troops or attacking their fleets
+can_take_hostile_actions = {
+	# Vanilia
+	if = {
+		limit = {
+			root = {
+				NOT = { has_policy_flag = first_contact_attack_allowed }
+			}
+			NOT = {
+				is_hostile = root
+				has_communications = root
+			}
+		}
+		custom_tooltip = {
+			text = "CAN_TAKE_HOSTILE_ACTION_FIRST_CONTACT_PROTOCOL"
+			always = no
+		}
+	}
+	else_if = {
+		limit = {
+			AND = {
+				NOR = {
+					has_country_flag = hostile_to_nomads
+					# Ariphaos Patch
+					is_hostile = root
+				}
+				root = {
+					is_country_type = nomad
+				}
+			}
+		}
+		custom_tooltip = {
+			text = "CAN_TAKE_HOSTILE_ACTION_FIRST_CONTACT_PROTOCOL"
+			always = no
+		}
+	}
+	# Origins of Civilization
+	else_if = {
+		limit = {
+			ROOT = { is_country_type = default }
+			is_country_type = mpo_lost_spacefarers
+		}
+		hidden_trigger = {
+			has_country_flag = mpo_attack_spacefarers
+			OR = {
+				any_owned_fleet = {
+					exists = solar_system.space_owner
+					solar_system.space_owner = {
+						is_same_value = ROOT
+					}
+				}
+				any_owned_planet = {
+					exists = solar_system.space_owner
+					solar_system.space_owner = {
+						is_same_value = ROOT
+					}
+				}		
+			}
+		}
+	}
+	# Vanilla
+	else_if = {
+		#attacking primitives with non-interference
+		limit = {
+			root = {
+				merg_is_default_empire = yes
+				OR = {
+					has_policy_flag = interference_passive
+					has_policy_flag = interference_active
+				}
+			}
+			is_primitive = yes
+		}
+		custom_tooltip = {
+			text = "CAN_TAKE_HOSTILE_ACTION_NATIVE_INTERFERENCE"
+			always = no
+		}
+	}
+	else_if = {
+		limit = {
+			is_primitive = yes
+			root = { merg_is_default_empire = yes }
+			capital_scope = {
+				root = {
+					NOT = {
+						any_planet_within_border = {
+							is_same_value = prevprev
+						}
+					}
+				}
+			}
+		}
+		custom_tooltip = {
+			text = ""
+			always = no
+		}
+	}
+	else_if = {
+		limit = {
+			root = { is_subject_type = satrapy }
+			is_country_type = faction
+			root = {
+				any_owned_planet = {
+					exists = controller
+					controller = {
+						is_same_value = prevprevprev
+					}
+				}
+			}
+		}
+		custom_tooltip = {
+			text = ""
+			always = yes
+		}
+	}
+	else_if = {
+		limit = {
+			root = { is_subject_type = satrapy }
+		}
+		custom_tooltip = {
+			text = "CAN_TAKE_HOSTILE_ACTION_SATRAPY"
+			always = no
+		}
+	}
+	# ACOT
+	else_if = {
+		limit = {
+			root = { is_subject_type = origin_protectorate }
+		}
+		custom_tooltip = {
+			text = "CAN_TAKE_HOSTILE_ACTION_SATRAPY"
+			always = no
+		}
+	}
+	else_if = {
+		limit = {
+			root = { is_subject_type = origin_banished_ascendancy }
+		}
+		custom_tooltip = {
+			text = "CAN_TAKE_HOSTILE_ACTION_SATRAPY"
+			always = no
+		}
+	}
+	else_if = {
+		limit = {
+			this = {
+				is_country_type = original_empire_passive
+			}
+		}
+		custom_tooltip = {
+			always = no
+		}
+	}
+	else_if = {
+		limit = {
+			this = {
+				is_country_type = void_lifeforms_1
+			}
+		}
+		custom_tooltip = {
+			always = yes
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				is_country_type = void_lifeforms_1
+			}
+		}
+		custom_tooltip = {
+			always = yes
+		}
+	}
+	else_if = {
+		limit = {
+			this = {
+				is_country_type = void_lifeforms_2
+			}
+		}
+		custom_tooltip = {
+			always = yes
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				is_country_type = void_lifeforms_2
+			}
+		}
+		custom_tooltip = {
+			always = yes
+		}
+	}
+	# Planet States
+	else_if = {
+		limit = {
+			is_country_type = planet_state
+			root = { merg_is_default_empire = yes }
+			capital_scope = {
+				root = {
+					NOT = {
+						any_planet_within_border = {
+							is_same_value = prevprev
+						}
+					}
+				}
+			}
+		}
+		custom_tooltip = {
+			text = "CAN_TAKE_HOSTILE_ACTION_PLANET_STATE"
+			always = no
+		}
+	}
+	else_if = {
+		limit = {
+			is_country_type = planet_state
+			root = {
+				OR = {
+					is_country_type = dormant_marauders
+					is_country_type = ruined_marauders
+					is_country_type = awakened_marauders
+				}
+			}
+		}
+		always = no
+	}
+	# Some Events of Outside Cluster
+	else_if = {
+		limit = {
+			OR = {
+				AND = {
+					root = { has_country_flag = nep_gaia_assist_war }
+					has_country_flag = nep_highlander_country
+				}
+				AND = {
+					root = { has_country_flag = nep_highlander_assist_war }
+					has_country_flag = nep_gaia_country
+				}
+			}
+		}
+		always = yes
+	}
+	else_if = {
+		# SEoOC_phantom
+		limit = {
+			root = {
+				NOT = { has_technology = tech_nep_phantom_phase_shift }
+			}
+			is_country_type = nep_phantom_passive
+		}
+		custom_tooltip = {
+			text = "CAN_TAKE_HOSTILE_ACTION_NEP_PHANTOM"
+			always = no
+		}
+	}
+	else_if = {
+		# SEoOC_side_story
+		limit = {
+			root = { is_ai = no }
+			OR = {
+				AND = {
+					root = { has_country_flag = nep_gaia_assist_war }
+					has_country_flag = nep_gaia_country
+				}
+				AND = {
+					has_country_flag = nep_gaia_assist_war
+					root = { has_country_flag = nep_gaia_country }
+				}
+				AND = {
+					root = { has_country_flag = nep_highlander_assist_war }
+					has_country_flag = nep_highlander_country
+				}
+				AND = {
+					has_country_flag = nep_highlander_assist_war
+					root = { has_country_flag = nep_highlander_country }
+				}
+				AND = {
+					has_country_flag = nep_gpc_country
+					root = { has_country_flag = nep_caravaneer_fleet_country }
+				}
+				AND = {
+					root = { has_country_flag = nep_gpc_country }
+					has_country_flag = nep_caravaneer_fleet_country
+				}
+			}
+		}
+		custom_tooltip = {
+			text = "CAN_TAKE_HOSTILE_ACTION_NEP_GAIA"
+			always = no
+		}
+	}
+	# Vanilla
+	else = {
+		always = yes
+	}
+}
+
+#Root = country, attacker
+#This = country, target
+#This rule is a condition for declaring war
+can_declare_war = {
+	custom_tooltip = {
+		fail_text = "ACTION_DECLARE_WAR_OVERLORD_ON_SUBJECT"
+		NOT = {
+			AND = {
+				OR = {
+					is_subject_type = "vassal"
+					is_subject_type = "protectorate"
+					is_subject_type = "signatory"
+					# ACOT / ZOFE
+					is_subject_type = "fe_clan_member"
+					is_subject_type = "fe_demilitarized_state"
+					is_subject_type = "fe_union_state"
+					is_subject_type = "fe_symbiote"
+					is_subject_type = "fe_auxiliary"
+					is_subject_type = "banished_ascendancy"
+					# Expanded Traits, Civics, Pops, and More
+					is_subject_type = "duchy"
+					is_subject_type = "charter"
+					is_subject_type = "scion_signatory"
+				}
+				overlord = {
+					is_same_value = root
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = root
+			root = {
+				has_policy_flag = no_wars
+				OR = {
+					is_subject = no
+					overlord = {
+						is_same_value = root
+					}
+				}
+			}
+		}
+		custom_tooltip = {
+			text = "CAN_DECLARE_WAR_POLICY"
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			exists = root
+			root = {
+				is_ai = yes
+			}
+		}
+		root = {
+			is_at_war = no
+		}
+	}
+}
+
+# can_colonize_planet
+
+#Root = country
+#This = planet
+can_colonize_outside_borders = {
+	exists = root
+	root = {
+		OR = {
+			# Human Fallen Empires
+			is_country_type = hfe_features_exodus
+			# The Empty Vagrant
+			is_country_type = ev_leviathans_crisis
+			# Project Gestalt
+			is_country_type = pg_last_hope
+		}
+	}
+	exists = solar_system
+	solar_system = {
+		not = {
+			exists = owner
+		}
+	}
+}
+
+#Root = country
+#This = planet
+can_terraform_planet = {
+	custom_tooltip = {
+		fail_text = terraform_fail_no_presapient_protection_or_no_presapients
+		NAND = {
+			root = { has_policy_flag = pre_sapients_protect }
+			any_owned_pop = { is_sapient = no }
+		}
+	}
+	# Planetary Diversity
+	NAND = {
+		root = { has_origin = origin_pd_tree_of_life }
+	}
+	# Vanilla
+	custom_tooltip = {
+		fail_text = "requires_actor_not_devouring_swarm_lithoid"
+		root = { is_lithoid_devouring_swarm = no }
+	}
+	# Planetary Diversity
+	custom_tooltip = {
+		fail_text = "requires_actor_not_pdtol"
+		root = { NOT = { has_origin = origin_pd_tree_of_life } }
+	}
+	# Real Space New Frontiers
+	custom_tooltip = {
+		fail_text = NO_TERRAFORM_HOLLOW_WORLD
+		OR = {
+			has_real_new_frontiers = no
+			AND = {
+				has_real_new_frontiers = yes # Let's not affect Expanded Gestalt's own pc_hollow
+				NOT = { is_planet_class = pc_hollow }
+			}
+		}
+	}
+	custom_tooltip = {
+		fail_text = NO_TERRAFORM_OVERMIND
+		OR = {
+			has_real_new_frontiers = no
+			AND = {
+				has_real_new_frontiers = yes # to avoid a bug
+				NOT = { has_deposit = d_heart_of_the_overmind }
+			}
+		}
+	}
+}
+
+#Root = country
+#This = pop
+can_colonize_with_pop = {
+	has_colonization_control = {
+		value = no
+		country =root
+	}
+	OR = {
+		NOT = { has_trait = trait_self_modified }
+		is_same_species = root
+	}
+	# The Empty Vagrant
+	Root = {
+		OR = {
+			NOT = {
+				is_country_type = default_ev
+			}
+			AND = {
+				is_country_type = default_ev
+				OR = {
+					has_origin = origin_ev_both_choosen
+					has_country_flag = has_ev_to_planets
+				}
+			}
+		}
+	}
+	NOR = {
+		# Plentiful Perks
+		has_trait = trait_plentiful_traditions_pt_cocoon
+		# Madoka Magica NEW
+		has_trait = trait_mahoshoujo
+		# Diagraphers Trait Mod
+		has_trait = trait_subsapient_form
+		has_trait = trait_rooted_adults_rooted
+		has_trait = trait_living_architecture
+		has_trait = trait_dimorphic_male
+	}
+	# Vanilla
+	if = {
+		limit = {
+			is_sapient = no
+		}
+		custom_tooltip = {
+			always = no
+		}
+	}
+	else = {
+		always = yes
+	}
+}
+
+#Root = country
+#This = species
+can_colonize_with_species = {
+	has_colonization_control = {
+		value = no
+		country =root
+	}
+	NOR = {
+		# Diagraphers Trait Mod
+		has_trait = trait_subsapient_form
+		has_trait = trait_rooted_adults_rooted
+		has_trait = trait_living_architecture
+		has_trait = trait_dimorphic_male
+		# Plentiful Perks
+		has_trait = trait_plentiful_traditions_pt_cocoon
+		# ThaumStellaris
+		has_trait = tc_trait_golem
+	}
+	OR = {
+		NOT = { has_trait = trait_self_modified }
+		is_same_species = root
+	}
+	# The Empty Vagrant
+	Root = {
+		OR = {
+			NOT = {
+				is_country_type = default_ev
+			}
+			AND = {
+				is_country_type = default_ev
+				OR = {
+					has_origin = origin_ev_both_choosen
+					has_country_flag = has_ev_to_planets
+				}
+			}
+		}
+	}
+	# Vanilla
+	if = {
+		limit = {
+			is_sapient = no
+		}
+		custom_tooltip = {
+			always = no
+		}
+	}
+	else_if = {
+		limit = { has_trait = trait_hive_mind }
+		root = { is_hive_empire = yes }
+	}
+	else_if = {
+		limit = { has_trait = trait_machine_unit }
+		root = { is_machine_empire = yes }
+	}
+	# Nyto Species Event Pack
+	else_if = {
+		limit = {  has_species_flag = GF_nyto_not_coloniz }
+		always = no
+	}
+	# Vanilla
+	else = {
+		always = yes
+	}
+}
+
+# Root = Pop
+# From = Country
+# This = Pop
+# NOTE: species_has_happiness is also checked for this
+pop_has_random_ethics = {
+	NOR = {
+		has_citizenship_type = { type = citizenship_organic_trophy }
+		# Diagraphers Trait Mod
+		has_trait = trait_subsapient_form
+	}
+}
+
+# Root = Species
+# From = Country
+# This = Species
+species_has_happiness = {
+	NOR = {
+		has_trait = trait_machine_unit
+		has_trait = trait_hive_mind
+		has_trait = trait_nerve_stapled
+		has_trait = trait_zombie
+		# Warship Girls R And MIST Species
+		has_trait = sh_trait_shenhai
+		has_trait = sh_trait_shenhai1
+		has_trait = sh_trait_shenhai2
+		has_trait = sh_trait_silent	
+		has_trait = sh_trait_silent1
+		# Expanded Events
+		has_trait = trait_memorex_comatos
+		# Trait Diversity
+        has_trait = trait_td_multi_hiveminded
+        has_trait = trait_td_emotionless
+        has_trait = trait_td_psychopathic
+		has_trait = trait_td_thymoleptic_implants
+		has_trait = trait_td_rbot_thymoleptic_scripts
+		has_trait = trait_td_rbot_thought_inhibitor
+		# Diagraphers Trait Mod
+		has_trait = trait_multihive_drone
+		# ThaumStellaris
+		has_trait = tc_trait_golem
+		# Vanilla
+		AND = {
+			has_trait = trait_mechanical
+			# Animated Synthetics Portraits Expanded: Reborn
+			OR = {
+				has_animated_synth = no
+				AND = {
+					has_animated_synth = yes
+					from = { has_authority = auth_machine_intelligence }
+					has_trait = trait_extsynth_synthetic
+					NOT = {
+						has_trait = trait_psionic
+					}
+				}
+				AND = {
+					has_animated_synth = yes
+					NOT = {
+						from = { has_authority = auth_machine_intelligence }
+						has_trait = trait_extsynth_synthetic
+					}
+				}
+			}
+			# Vanilla
+			OR = {
+				NOT = { exists = from }
+				from = { has_authority = auth_machine_intelligence }
+				from = { NOT = { has_technology = tech_synthetic_workers } }
+				from = { has_policy_flag = ai_outlawed }
+			}
+		}
+		AND = {
+			has_trait = trait_cybernetic
+			exists = from
+			from = {
+				has_authority = auth_machine_intelligence
+				has_valid_civic = civic_machine_assimilator # Assimilator empire
+			}
+		}
+	}
+}
+
+#Root = country, us
+#This = country, them
+#This rule is a condition for determining if a country is hostile towards another. not to be confused with can_take_hostile_action
+can_be_hostile_towards = {
+	if = {
+		limit = { is_primitive = yes }
+		root = {
+			NOT = { has_policy_flag = interference_passive }
+		}
+	}
+	else_if = {
+		limit = { root = { is_primitive = yes } }
+		NOT = { has_policy_flag = interference_passive }
+	}
+	else_if = {
+		limit = { is_country_type = ratlings }
+		always = yes
+	}
+	# ACOT
+	else_if = {
+		limit = { is_country_type = void_lifeforms_1 }
+		always = yes
+	}
+	else_if = {
+		limit = { root = { is_country_type = void_lifeforms_1 } }
+		always = yes
+	}
+	else_if = {
+		limit = { is_country_type = void_lifeforms_2 }
+		always = yes
+	}
+	else_if = {
+		limit = { root = { is_country_type = void_lifeforms_2 } }
+		always = yes
+	}
+}
+
+# Checks if a pop can procreate
+# This = Species
+# Root = Planet
+can_species_procreate = {
+	is_sapient = yes
+	NOR = {
+		has_trait = trait_machine_unit
+		has_trait = trait_mechanical
+		# Plentiful Traditions - Extra Perks
+		has_trait = trait_plentiful_traditions_pt_cocoon
+		# Madoka Magica NEW
+		has_trait = trait_mahoshoujo
+		# Expanded Events
+		has_trait = trait_memorex_comatos
+		AND = {
+			root = { owner = { has_origin = origin_hive_queen } }
+			has_trait = trait_hive_mind
+		}
+		# Human Fallen Empires
+		has_trait = hfe_species_trait_brainworm
+		# Holofrixit Revisited / Silfae's Portraits: Revisited
+		has_trait = trait_hologanglion
+		# Expanded Gestalts
+		has_trait = trait_hive_mind_overlord
+		# Diagraphers Trait Mod
+		has_trait = trait_dimorphic_male
+	}
+	NAND = {
+		root = { has_modifier = slave_colony }
+		NOT = { has_citizenship_type = { type = citizenship_slavery country = root.owner } }
+		# Special Colonies Overhaul
+		AND = {
+			has_special_colonies = yes
+			NOT = {
+				root = {
+					owner = {
+						or = {
+							has_valid_civic = civic_slaver_guilds
+							has_valid_civic = civic_indentured_assets
+						}
+					}
+				}
+			}
+		}
+	}
+	# Diagraphers Trait Mod
+	NAND = {
+		has_trait = trait_exotic_gas_dependency
+		exists = root.owner
+		root.owner = {
+			resource_stockpile_compare = {
+				resource = exotic_gases
+				value <= 0
+			}
+		}
+	}
+	NAND = {
+		has_trait = trait_delicate
+		exists = root.owner
+		has_citizenship_type = { type = citizenship_slavery country = root.owner }
+	}
+	NAND = {
+		has_trait = trait_sterile
+		exists = root.owner
+		root.owner = {
+			has_artificial_wombs = no
+		}
+	}
+	# Expanded Events
+	if = {
+		limit = {
+			has_trait = trait_tree_caretaker
+		}
+		root = {
+			OR = {
+				has_deposit = d_tree_of_life_colony
+				has_deposit = d_tree_of_life_home
+			}
+		}
+	}
+	# Vanilla
+	NOT = { has_species_flag = nivlac_no_procreation }
+	if = {
+		limit = {
+			has_trait = trait_necrophage
+		}
+		NOT = {
+			root = {
+				any_owned_species = {
+					has_population_control = { country = root.owner value = no }
+					species_can_be_necrophaged = yes
+				}
+			}
+		}
+	}
+}
+
+# Checks if a pop can be assembled
+# This = Species
+# Root = Planet
+can_species_be_assembled = {
+	is_sapient = yes
+	NOT = { has_trait = trait_holodrone } # Holofrixit Revisited / Silfae's Portraits: Revisited
+	OR = {
+		# Robots
+		AND = {
+			is_robotic = yes
+			# Azur lane Stellaris DLC
+			NOT = { has_trait = trait_robot_mind_relic_core }
+			# Diagraphers Trait Mod
+			NAND = {
+				has_trait = trait_robot_rare_crystal_components
+				exists = root.owner
+				root.owner = {
+					resource_stockpile_compare = {
+						resource = rare_crystals
+						value <= 0
+					}
+				}
+			}
+			# Vanilla
+			root = {
+				check_modifier_value = {
+					modifier = planet_pop_assembly_add
+					value > 0
+				}
+				owner = {
+					NOR = {
+						# Azur lane Stellaris DLC
+						has_authority = auth_azur_lane_1
+						has_authority = auth_azur_lane_2
+						has_authority = auth_azur_lane_K
+					}
+				}
+			}
+		}
+		# Organics
+		AND = {
+			is_organic_species = yes
+			# Hives can only clone drones
+			if = {
+				limit = {
+					root.owner = { is_hive_empire = yes }
+				}
+				AND = {
+					has_trait = trait_hive_mind
+					# Expanded Gestalts
+					NOT = { has_trait = trait_hive_mind_overlord }
+				}
+			}
+			# Expanded Traits, Civics, Pops, and More
+			else_if = {
+				limit = {
+					Root = {
+						owner = { has_origin = origin_sacred_tree }
+						OR = {
+							has_deposit = d_tree_of_life_home
+							has_deposit = is_for_colonizable
+						}
+					}
+				}
+				OR = {
+					has_trait = trait_tree_caretaker
+					merg_has_cloning_building = yes
+				}
+			}
+			# flourishing plantoids
+			else_if = {
+				limit = { has_trait = trait_plantoid_budding }
+				root = {
+					any_owned_species = { is_exact_same_species = prevprev }
+				}
+			}
+			# Clone army
+			else_if = {
+				limit = {
+					OR = {
+						has_trait = trait_clone_soldier_infertile
+						has_trait = trait_clone_soldier_infertile_full_potential
+					}
+				}
+				root = {
+					# Event 'clones.3' should cover this, but extra safety check.
+					has_building = building_clone_army_clone_vat
+					NOT = {
+						check_variable = {
+							which = clone_pops_missing
+							value = 0
+						}
+					}
+				}
+			}
+			# Plentiful Traditions - Extra Perks
+			else_if = {
+				limit = {
+					root.owner = { has_ascension_perk = ap_total_assimilation }
+				}
+				has_trait = trait_plentiful_traditions_pt_cocoon
+			}
+			# The Dark Art of Necromancy
+			else_if = {
+				limit = {
+					OR = {
+						has_trait = trait_necromage
+						has_trait = trait_undead
+						has_trait = trait_mindless_undead
+					}
+				}
+			}
+			# Vanilla
+			else = {
+				OR = {
+					root = {
+						merg_has_cloning_building = yes
+						# ANZ Advanced Cloning
+						NOT = { has_modifier = planet_cloning_limits }
+					}
+					# The DAL Species Mod
+					is_archetype = DATEALIVE
+					# Warship Girls R and MIST species
+					is_archetype = WARSHIPGIRL
+					is_archetype = SHENHAI
+					# Star Wars: UnknownWorld Shipgirls Story
+					is_archetype = STARSHIPGIRLS
+				}
+			}
+			# Special Colonies Overhaul
+			NAND = {
+				has_special_colonies = yes
+				root = { has_modifier = slave_colony }
+				NOT = { has_citizenship_type = { type = citizenship_slavery country = root.owner } }
+				not = {
+					root = {
+						owner = {
+							or = {
+								has_valid_civic = civic_slaver_guilds
+								has_valid_civic = civic_indentured_assets
+							}
+						}
+					}
+				}
+			}
+		}
+		# Azur lane Stellaris DLC
+		AND = {
+			species = { is_archetype = KANSEN }
+			root = {
+				check_modifier_value = {
+					modifier = planet_pop_assembly_organic_add
+					value > 0
+				}
+			}
+		}
+	}
+	# Expanded Gestalts
+	NAND = {
+		root = { owner = { has_valid_civic = civic_machine_replicators } }
+		has_trait = trait_machine_central
+	}
+	# Vanilla
+	has_population_control = {
+		value = no
+		country = root.owner
+	}
+}
+
+#This rule is a condition for bombarding planets
+#Root = fleet, potential attacker
+#From = planet, potential target
+can_orbital_bombard = {
+	exists = from.OWNER
+	NOR = {
+		any_owned_ship = { is_ship_size = colossus }
+		# Real Space New Frontiers
+		# This will affect Expanded Gestalt's planet too, but there's only so much I can do
+		from = { is_planet_class = pc_hollow }
+	}
+	OR = {
+		AND = {
+			root.OWNER = {
+				NOT = { has_communications = from.OWNER }
+			}
+			from.OWNER = {
+				NOT = { is_country_type = primitive }
+			}
+		}
+		AND = {
+			root.OWNER = {
+				NOR = {
+					has_policy_flag = interference_passive
+					has_policy_flag = interference_active
+				}
+			}
+			from.OWNER = { is_country_type = primitive }
+		}
+		# Origins of Civilization
+		AND = {
+			ROOT.OWNER = {
+				NOT = {
+					has_policy_flag = ai_full_rights
+				}
+			}
+			FROM.OWNER = { is_country_type = vbp_machine }
+		}
+		# Vanilla
+		ROOT.OWNER = { is_hostile = FROM.CONTROLLER } # Ariphaos patch - Risa Fix
+		root.OWNER = { is_at_war_with = from.CONTROLLER }
+		from = {
+			OR = {
+				is_planet_class = pc_infested
+				# LEX
+				has_planet_flag = bwm_ancestor_world
+			}
+		}
+		from.CONTROLLER = {
+			OR = {
+				is_country_type = swarm
+				is_country_type = ai_empire
+				is_country_type = cybrex_empire
+				AND = {
+					is_country_type = awakened_marauders
+					root.OWNER = { is_hostile = prev }
+				}
+				# Ancient Empire
+				AND = {
+					has_ancient_empire = yes
+					ag_can_be_orbital_bombardment_country = yes
+				}
+				# ACOT
+				is_country_type = original_empire
+				is_country_type = void_lifeforms_1
+				is_country_type = void_lifeforms_2
+				# Star Wars: Kuat Ancient Empire
+				is_country_type = kuat_fleet
+				is_country_type = awakened_return_kuat_empire
+				# Gigastructural Engineering & More
+				is_country_type = katzenartig_imperium
+				# is_country_type = compound_empire
+				# LEX
+				# is_country_type = mem_ancestor_guardian
+				# Solar Storm
+				is_country_type = abyssal_host_invaders_type
+				# Human Fallen Empires
+				is_country_type = human_fallen_empire
+				# Shroud Rising
+				is_country_type = shroud_horrors
+				is_country_type = shroud_cult
+			}
+		}
+		root.OWNER = {
+			OR = {
+				is_country_type = extradimensional
+				is_country_type = extradimensional_2
+				is_country_type = extradimensional_3
+				is_country_type = swarm
+				is_country_type = ai_empire
+				# is_country_type = cybrex_empire - Ariphaos Patch - Should be governed by hostile rule
+				is_country_type = dormant_marauders
+				is_country_type = marauder_raiders
+				is_country_type = ruined_marauders
+				is_country_type = gray_goo
+				is_country_type = vol
+				AND = {
+					is_country_type = awakened_marauders
+					from.CONTROLLER = { is_hostile = prev }
+				}
+				# Warship Girls R And MIST Species
+				AND = {
+					has_warship_girls = yes
+					OR = {
+						is_country_type = wg_crisis_country
+						is_khan_country_type = yes
+					}
+				}
+				# Star Wars: UnknownWorld Shipgirls Story
+				is_country_type = afk_crisis_country
+				# Ancient Empire
+				AND = {
+					has_ancient_empire = yes
+					ag_can_do_orbital_bombardment_country = yes
+				}
+				# ACOT
+				is_country_type = original_empire
+				is_country_type = void_lifeforms_1
+				is_country_type = void_lifeforms_2
+				# Star Wars: Kuat Ancient Empire
+				is_country_type = kuat_fleet
+				is_country_type = awakened_return_kuat_empire
+				is_country_type = kuat_fallen_empire
+				is_country_type = kuat_awakened_fallen_empire
+				is_country_type = awakened_return_kuat_empire
+				# History of the Lost Empire
+				is_country_type = LsE_fallen_empire
+				# Gigastructural Engineering & More
+				is_country_type = katzenartig_imperium
+				is_country_type = acot_crazed_stellarite
+				# is_country_type = compound_empire
+				# The Empty Vagrant
+				is_country_type = default_ev
+				# LEX
+				# is_country_type = mem_ancestor_guardian
+				# Solar Storm
+				is_country_type = abyssal_host_invaders_type
+				# Human Fallen Empires
+				is_country_type = human_fallen_empire
+				# Shroud Rising
+				is_country_type = shroud_horrors
+				is_country_type = shroud_cult
+			}
+		}
+		AND = {
+			from.controller = {
+				is_country_type = faction
+				NOT = { is_same_value = root.owner }
+			}
+			from.owner = {
+				is_same_value = root.owner
+			}
+		}
+		# More Events Mod
+		AND = {
+			exists = root.OWNER
+			exists = from.CONTROLLER
+			root.OWNER = {
+				OR = {
+					is_country_type = mem_surveyor_country_red
+					is_country_type = mem_vazurans
+				}
+			}
+			from.CONTROLLER = {
+				merg_is_default_empire = yes
+			}
+		}
+		# The Empty Vagrant
+		root.OWNER = {
+			is_country_type = ev_leviathans_crisis
+		}
+		# Eldar Revisited
+		AND = {
+			root.owner = { is_country_type = shroud_spirits }
+			from = { has_planet_flag = is_shroud_attack_planet_target }
+		}
+	}
+}
+
+# can_planet_support_orbital_station
+
+# Check if full sensor range in entire galaxy
+# root: country
+has_full_sensor_range = {
+	NOT = { has_country_flag = z_fw_misc_full_sensor_off } # Core Framework & Modmenu
+	OR = {
+		has_megastructure = spy_orb_4
+		has_megastructure = spy_orb_restored
+		# ACOT
+		has_megastructure = sofe_omega_spy_orb_center
+		# Core Framework & Modmenu
+		has_country_flag = z_fw_r_celestial_orrey_activited
+		has_country_flag = z_fw_r_cheat_quantum_beacon_activited
+	}
+}
+
+# show_notification_for_ground_combat
+# should_apply_neighbor_rival_modifier
+# are_rebels_hostile
+# should_colony_be_destroyed_on_pc_change
+# is_extradimensional_portal
+# is_extradimensional_anchor
+# will_anger_fallen_empire
+# can_have_robot_pops
+# can_stop_purge_pop_manually
+# can_purge_pop_manually
+# fleet_uses_templates
+
+# this = starbase, megastructure or planet
+can_orbitable_repair_ships = {
+	OR = {
+		AND = {
+			is_scope_type = starbase
+			OR = {
+				has_starbase_size >= starbase_starport
+				has_starbase_size = juggernaut
+				# ACOT
+				has_starbase_size >= ls_starbase_starport
+				has_starbase_size = origin_super_citadel_playable
+				has_starbase_size = origin_super_citadel
+				has_starbase_size >= acot_precusor_starbase
+				has_starbase_size >= acot_precusor_sigma_starbase
+				has_starbase_size >= acot_precusor_phanon_starcitadel
+				has_starbase_size >= precursor_colossus
+				has_starbase_size >= acot_star_commander
+				# ZOFE
+				has_starbase_size = fe_goliath
+				# AOT
+				has_starbase_size = ascended_juggernaut
+				has_starbase_size = precursor_juggernaut
+			}
+			fleet = {
+				is_disabled = no
+			}
+		}
+		AND = {
+			is_scope_type = megastructure
+			OR = {
+				is_megastructure_type = mega_shipyard_1
+				is_megastructure_type = mega_shipyard_2
+				is_megastructure_type = mega_shipyard_3
+				# ACOT/AOT
+				is_megastructure_type = acot_precursor_colossus_base
+				is_megastructure_type = acot_precursor_colossus_stage_two
+				is_megastructure_type = acot_amerigo
+				is_megastructure_type = acot_amerigo_ae
+				is_megastructure_type = acot_amerigo_se
+				is_megastructure_type = acot_amerigo_oe
+				is_megastructure_type = acot_phanon_master_reactor_sphere
+				# Gigastructural Engineering & More
+				is_megastructure_type = the_vat_1
+				is_megastructure_type = the_vat_2
+				is_megastructure_type = the_vat_3
+				is_megastructure_type = the_vat_4
+			}
+		}
+	}
+}
+
+# this = ship
+# root = country that kills ship
+can_spawn_debris = {
+	NOT = { has_global_flag = z_fw_flg_glbl_tech_overwhelm } # Core Framework & Modmenu
+	root = {
+		merg_is_default_empire = yes
+	}
+	exists = owner
+	owner = {
+		NOR = {
+			has_ascension_perk = ap_enigmatic_engineering
+			# Warship Girls R And MIST Species
+			is_country_type = wg_crisis_country
+			is_country_type = wg_Khan_country_type
+			is_country_type = wg_Khan_country_type_auto_delete
+			# Star Wars: UnknownWorld Shipgirls Story
+			is_country_type = afk_crisis_country
+			# History of the Lost Empire
+			is_country_type = LsE_fallen_empire
+			# The Empty Vagrant
+			is_country_type = default_ev
+			# Twinks Atlantean
+			has_valid_civic = civic_tw_atlantis
+			# Expanded Gestalts
+			has_valid_civic = civic_hive_strong_connection
+		}
+	}
+}
+
+# this = system
+# root = country
+# Determines if AI-controlled empires should restrict (and thus avoid) a system
+# Used by regular empires, fallen empires & crises
+ai_should_restrict_system = {
+	OR = {
+		AND = {
+			root = {
+				OR = {
+					merg_is_fallen_empire = yes
+					is_country_type = caravaneer_fleet
+				}
+			}
+			exists = owner
+			owner = { 
+				OR = {
+					is_country_type = awakened_marauders 
+					# Ariphaos Patch
+					is_country_type = dormant_marauders
+				}
+			}
+		}
+		AND = {
+			root = {
+				OR = {
+					is_country_type = caravaneer_fleet
+					is_country_type = awakened_marauders
+					# Ariphaos Patch
+					is_country_type = marauder_raiders
+				}
+			}
+			exists = owner
+			owner = { merg_is_fallen_empire = yes }
+		}
+		AND = {
+			root = {
+				OR = {
+					merg_is_fallen_empire = yes
+					is_country_type = awakened_marauders
+					is_country_type = marauder_raiders
+					is_country_type = caravaneer_fleet
+				}
+			}
+			has_star_flag = guardian
+			any_fleet_in_system = {
+				exists = owner
+				owner = {
+					is_guardian_country = yes
+				}
+			}
+		}
+		AND = {
+			root = {
+				OR = {
+					is_crisis_faction = yes
+					merg_is_awakened_fe = yes
+				}
+			}
+			has_star_flag = guardian
+			any_fleet_in_system = {
+				exists = owner
+				owner = {
+					is_country_type = guardian_fortress
+				}
+			}
+		}
+		# Gigastructural Engineering & More
+		AND = {
+			has_gigastructures = yes
+			NOT = { has_global_flag = katzenartig_imperium_happened }
+			OR = {
+				has_global_flag = katzenartig_always
+				has_global_flag = katzenartig_deathwish
+				has_global_flag = katzenartig_stellarite
+				has_global_flag = katzenartig_improbable
+			}
+			has_star_flag = flusion_system
+			event_target:gigaflusion = {
+				exists = owner
+				owner = { is_country_type = primitive }
+			}
+		}
+		# Spaceborne Civs Expanded
+		AND = {
+			root = {
+				OR = {
+					merg_is_fallen_empire = yes
+					is_country_type = awakened_marauders
+					is_country_type = marauder_raiders
+					is_country_type = caravaneer_fleet
+				}
+			}
+			OR = {
+				has_star_flag = crystal_home_system
+				has_star_flag = amoeba_home_system
+				has_star_flag = drone_home_system
+			}
+			any_fleet_in_system = {
+				exists = owner
+				owner = {
+					OR = {
+						is_country_type = crystal
+						is_country_type = amoeba
+						is_country_type = amoeba_garrison
+						is_country_type = drone
+					}
+				}
+			}
+		}
+		# ACOT
+		AND = {
+			root = {
+				OR = {
+					is_country_type = default
+					# The Empty Vagrant
+					is_country_type = default_ev
+				}
+			}
+			exists = owner
+			owner = { is_country_type = original_empire }
+		}
+		AND = {
+			root = { merg_is_fallen_empire = yes }
+			any_ship_in_system = {
+				exists = owner
+				owner = {
+					OR = {
+                        is_guardian_country = yes
+						is_country_type = sofe_sentinel_active
+					}
+				}
+			}
+		}
+		# A Deadly Tempest
+		AND = {
+			root = {
+				OR = {
+					is_crisis_faction = yes
+					has_country_flag = pike_assisted_ai
+				}
+			}
+			has_star_flag = pike_star_flag_banned_system
+		}
+		# Ancient Empire
+		AND = {
+			root = {
+				OR = {
+					merg_is_fallen_empire = yes
+					merg_is_awakened_fe = yes
+					is_country_type = awakened_marauders
+					is_country_type = ag_ancient_psi_guardian
+				}
+			}
+			OR = {
+				has_star_flag = ag_zeta_crisis_psionic_storm_system
+				has_star_flag = ag_zeta_crisis_psionic_singularity_system
+			}
+		}
+	}
+}
+
+# can_subjugate_empires
+
+# this = Fleet
+can_jump_drive = {
+	# Ancient Empire
+	custom_tooltip = {
+		fail_text = ag_jump_drive_unable_system_tooltip
+		NOT = {
+			solar_system = {
+				has_star_flag = ag_no_jump_out_system
+			}
+		}
+	}
+	# Some Events of Outside Cluster
+	if = {
+		limit = {
+			exists = solar_system
+			solar_system = { has_star_flag = nep_Scrus_cluster }
+		}
+		custom_tooltip = {
+			text = "CAN_NOT_JUMP_WHEN_IN_SCRUS"
+			always = no
+		}
+	}
+	else_if = {
+		limit = {
+			exists = solar_system
+			solar_system = {
+				OR = {
+					has_star_flag = nep_whitegoo_1
+					has_star_flag = nep_whitegoo_2
+					has_star_flag = nep_whitegoo_3
+				}
+			}
+			owner = { NOT = { has_technology = tech_nep_whitegoo_3_2 } }
+		}
+		custom_tooltip = {
+			text = "CAN_NOT_JUMP_IN_WHITEGOO"
+			always = no
+		}
+	}
+	else = {
+		always = yes
+	}
+}
+
+# this = country
+can_spawn_occupation_armies = {
+	OR = {
+		is_country_type = default
+		merg_is_fallen_empire = yes
+		merg_is_awakened_fe = yes
+		# ACOT
+		is_country_type = original_empire
+		is_country_type = original_empire_passive
+		is_country_type = original_empire_active
+		is_country_type = sofe_light_seeker
+	}
+}
+
+# this = system
+# root = country
+system_blocks_sensors = {
+	# Vanilla, includes code from Ariphaos' Sensor Expansion
+	OR = {
+		AND = {
+			OR = {
+				has_modifier = space_storm
+				is_inside_nebula = yes
+				# Real Space Nebulae
+				is_star_class = sc_collapsar
+				is_star_class = sc_p_purple
+				is_star_class = sc_p_green
+				is_star_class = sc_p_red
+			}
+			ROOT = { NOT = { has_technology = tech_ariphaos_sensors_nebula } }
+		}
+		AND = {
+			OR = {
+				has_star_flag = lcluster
+				has_star_flag = sealed_system
+			}
+			# Making sure modded hidden systems will work as intended if Sensor Expansion is installed
+			NOR = {
+				# Warship Girls R And MIST Species
+				has_star_flag = wg_sealed_system
+				has_star_flag = wg_psionic_systems
+				# Ancient Empire
+				has_star_flag = ag_no_sensor_system
+				# Solar Storm
+				has_star_flag = ss_abyssal_shockwave
+			}
+			ROOT = { NOT = { has_technology = tech_ariphaos_sensors_sealed } }
+		}
+		# Warship Girls R And MIST Species
+		has_star_flag = wg_sealed_system
+		has_star_flag = wg_psionic_systems
+		# Ancient Empire
+		has_star_flag = ag_no_sensor_system
+		# Solar Storm
+		has_star_flag = ss_abyssal_shockwave
+		# Sensor Expansion
+		AND = {
+			has_sensor_expansion = yes
+			OR = {
+				is_star_class = sc_binary_2
+				is_star_class = sc_neutron_star
+			}
+			ROOT = { NOT = { has_technology = tech_sensors_4 } }
+		}
+		AND = {
+			has_sensor_expansion = yes
+			OR = {
+				is_star_class = sc_binary_1
+				is_star_class = sc_pulsar
+			}
+			ROOT = { NOT = { has_technology = tech_ariphaos_sensors_pulsar } }
+		}
+		AND = {
+			has_sensor_expansion = yes
+			has_natural_wormhole = yes
+			ROOT = { NOT = { has_technology = tech_ariphaos_sensors_wormhole } }
+		}
+		AND = {
+			has_sensor_expansion = yes
+			is_star_class = sc_black_hole
+			ROOT = { NOT = { has_technology = tech_ariphaos_sensors_black_hole } }
+		}
+		AND = {
+			exists = starbase
+			starbase = { has_starbase_building = ariphaos_sensors_jammer_starbase }
+			ROOT = { NOT = { has_technology = tech_ariphaos_sensors_jammed } }
+		}
+	}
+}
+
+# Root = country attempting to target system for movement
+# This = system being targeted
+can_enter_system_by_jump = {
+	custom_tooltip = {
+		# success_text = "debug: can jump"
+		fail_text = cannot_jump_to_system
+		OR = {
+			# Core Framework & Modmenu
+			root = {
+				OR = {
+					has_country_flag = z_fw_r_celestial_orrey_activited
+					has_country_flag = z_fw_r_cheat_quantum_beacon_activited
+				}
+			}
+			AND = {
+				# Sealed system
+				OR = {
+					NOT = { has_star_flag = sealed_system }
+					AND = {
+						root = { has_country_flag = entered_sealed_system }
+						has_star_flag = sealed_system
+					}
+				}
+				# Clusters and forbidden systems
+				NOR = {
+					has_star_flag = lcluster
+					# Ancient Empire
+					has_star_flag = ag_no_jump_in_system
+					# ACOT
+					has_star_flag = outercluster
+					# Warship Girls R And MIST Species
+					has_star_flag = wg_sealed_system
+					has_star_flag = wg_psionic_systems
+					# SW:Kuat Ancient Empire
+					has_star_flag = Kuat_system
+					has_star_flag = Kuat_system_1
+					has_star_flag = Kuat_system_2
+					has_star_flag = Kuat_system_3
+					has_star_flag = kuat_initial_system
+					has_star_flag = Kuat_system_int
+					has_star_flag = Kuat_system_int_1
+					has_star_flag = Kuat_system_int_2
+					has_star_flag = Kuat_system_int_3
+					has_star_flag = Kuat_system_int_4			
+					AND = {
+						has_global_flag = starkillerbase_not_passed
+						has_star_flag = starkiller_system	
+					}
+					# Gigastructural Engineering and More
+					AND = {
+						has_gigastructures = yes
+						OR = {
+							# has_star_flag = ehof_compound_system
+							has_star_flag = giga_core_03
+							cohesive_system = yes
+							urmazin_system = yes
+							everchanging_system = yes
+							katzen_jump_blocked_system = yes
+							has_star_flag = maginot_anti_jump_star
+						}
+					}
+					# Some Events of Outside Cluster
+					has_star_flag = nep_Krahen_cluster
+					has_star_flag = nep_Scrus_cluster
+					AND = {
+						has_global_flag = nep_not_pass_Aemethms
+						OR = {
+							has_star_flag = nep_dragon_system
+							has_star_flag = nep_heptagram_cluster
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+# This = pop
+can_resettle_pop = {
+	# Self-modified Pops won't leave
+	custom_tooltip = {
+		fail_text = "self_modified_refuse"
+		NOT = { has_trait = trait_self_modified }
+	}
+	# Expanded Events
+	custom_tooltip = {
+		fail_text = "caretaker_refuse"
+		NOT = { has_trait = trait_tree_caretaker }
+	}
+	#Done as an IF/ELSE so the tooltip isn't hideous and unreadable
+	# Diagraphers Trait Mod
+	if = {
+		limit = {
+			OR = {
+				has_trait = trait_living_architecture
+				has_trait = trait_rooted_adults_rooted
+			}
+		}
+		always = no
+	}
+	# Vanilla
+	else_if = {
+		limit = { is_shackled_robot = yes }
+		always = yes
+	}
+	else_if = {
+		limit = {
+			planet = {
+				merg_is_doomed_planet = yes
+			}
+		}
+		always = yes
+	}
+	else_if = {
+		limit = {
+			planet = {
+				has_modifier = planet_culture_shock
+			}
+		}
+		OR = {
+			is_same_species = planet.owner
+			planet = {
+				NOT = { has_modifier = planet_culture_shock }
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			owner = {
+				is_gestalt = yes
+			}
+		}
+		always = yes
+	}
+	else = {
+		custom_tooltip = {
+			fail_text = RESETTLEMENT_POLICY_FAIL
+			owner = {
+				has_policy_flag = resettlement_allowed
+			}
+		}
+	}
+}
+
+can_country_resettle = {
+	OR = {
+		has_policy_flag = resettlement_allowed
+		is_gestalt = yes
+		custom_tooltip = {
+			text = owns_non_sapient_robots
+			country_has_shackled_robots = yes
+		}
+		hidden_trigger = { #don't need to show this as tooltip only shown when all game rule fails, and this is a special case
+			any_owned_planet = {
+				merg_is_doomed_planet = yes
+			}
+		}
+	}
+}
+
+# This = Planet
+can_resettle_planet = {
+	owner = {
+		OR = {
+			has_policy_flag = resettlement_allowed
+			is_gestalt = yes
+			country_has_shackled_robots = yes
+			any_owned_planet = {
+				merg_is_doomed_planet = yes
+			}
+		}
+	}
+	is_controlled_by = owner
+	has_ground_combat = no
+	has_orbital_bombardment = no
+	custom_tooltip = {
+		text = "RESETTLE_PLANET_UNDER_COLONIZATION"
+		exists = this
+		is_under_colonization = no
+	}
+}
+
+# can_resettle_planet_no_owner_check
+# should_spawn_deposits
+# is_new_colony
+
+# This = pop
+pop_generates_crime = {
+	is_sapient = yes
+	is_non_sapient_robot = no
+	is_being_assimilated = no
+	NOR = {
+		# Plentiful Perks
+		has_trait = trait_plentiful_traditions_pt_cocoon
+		# Warship Girls R And MIST Species
+		has_trait = wsg_trait_warshipgirls
+		has_trait = wsg_trait_warshipgirls1
+		has_trait = wsg_trait_warshipgirls2
+		has_trait = wsg_trait_mist
+		has_trait = sh_trait_shenhai
+		has_trait = sh_trait_shenhai1
+		has_trait = sh_trait_shenhai2
+		has_trait = sh_trait_shenhai3
+		has_trait = trait_intelligent_galo
+		# Star Wars: UnknownWorld Shipgirls Story
+		has_trait = swg_trait_starshipgirls
+		# Kancolle
+		has_trait = kancolle_trait_kanmusu
+		has_trait = kancolle_trait_kanmusu1
+		has_trait = kancolle_trait_kanmusu2
+		# AshArms Aquarius history
+		has_trait = adf_trait_dolls
+	}
+}
+
+# can_pops_grow_on_planet
+# can_pops_assemble_on_planet
+# can_pops_decline_on_planet
+# can_force_grow_on_planet
+
+# This = planet
+# Root = country
+can_force_decline_on_planet = {
+	custom_tooltip = {
+		fail_text = FORCE_DECLINE_NEEDS_POP_CONTROLS
+		exists = owner
+		owner = { NOT = { has_policy_flag = population_controls_not_allowed } }
+	}
+	custom_tooltip = {
+		fail_text = FORCED_DECLINE_ALREADY_PURGING
+		NOT = {
+			any_owned_species = {
+				has_citizenship_type = { type = citizenship_purge country = root }
+				NOT = { has_purge_type = { country = root type = purge_neutering } }
+			}
+		}
+	}
+}
+
+# can_force_decline_species
+
+## If this returns true, the species will be set to decline even if it is not being purged
+# This = species
+# From = planet
+## Note: success text tooltips are shown in alert_pops_declining alert.
+should_force_decline_species = {
+	# Rule rewritten by Rodahtnov
+	if = {
+		# Infertile Clone Army pops should decline if in Country that can't have Vats, or there is a Vat shortage.
+		limit = {
+			exists = from.owner
+			from.owner = {
+                OR = {
+                    has_origin = origin_clone_army
+                    AND = {
+                        NOT = {
+                            has_origin = origin_clone_army
+                        }
+                        any_owned_species = {
+                            OR = {
+                                has_trait = trait_clone_soldier_infertile
+                                has_trait = trait_clone_soldier_infertile_full_potential
+                            }
+                        }
+                    }
+                }
+			}
+		}
+		custom_tooltip = {
+			success_text = CLONE_ARMY_FORCE_DECLINE
+			OR = {
+				has_trait = trait_clone_soldier_infertile
+				has_trait = trait_clone_soldier_infertile_full_potential
+			}
+			from = {
+				OR = {
+					# Check if country is unable to build Vats for this species.
+					AND = {
+						exists = owner
+						owner = {
+							OR = {
+								NOT = { has_origin = origin_clone_army }					# Can't have Vats.
+								has_country_flag = clone_army_fertility_unlocked			# Can't have Vats anymore.
+								NOT = { owner_main_species = { is_same_species = root } }	# Our Vats can't build this species.
+							}
+						}
+					}
+					# Vats check out, but are there more pops than Vats support?
+					check_variable = { which = clone_pops_missing value < 0 }
+				}
+			}
+		}
+	}
+	# Diagraphers Trait Mod
+	if = {
+		limit = {
+			has_trait = trait_sterile
+			from = { exists = owner }
+		}
+		custom_tooltip = {
+			success_text = sterile_force_decline
+			has_trait = trait_sterile
+			from.owner = {
+				has_artificial_wombs = no
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_trait = trait_exotic_gas_dependency
+			from = { exists = owner }
+		}
+		custom_tooltip = {
+			success_text = needs_exotic_gases
+			has_trait = trait_exotic_gas_dependency
+			from.owner = {
+				has_deficit = exotic_gases
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_trait = trait_delicate
+			from = { exists = owner }
+		}
+		custom_tooltip = {
+			success_text = delicate_enslaved
+			has_trait = trait_delicate
+			has_citizenship_type = {
+				type = citizenship_slavery
+				country = from.owner
+			}
+		}
+	}
+	# Expanded Traits, Civics, Pops, and More
+	if = {
+		limit = {
+			has_trait = trait_tree_caretaker
+			from = { exists = owner }
+		}
+		custom_tooltip = {
+			success_text = TREEFOLK_FORCE_DECLINE
+			has_trait = trait_tree_caretaker
+			from = {
+				NOR = {
+					has_deposit = d_tree_of_life_colony
+					has_deposit = d_tree_of_life_home
+				}
+			}
+		}
+	}
+	# Cryogenesis Unofficial Species Pack
+	if = {
+		limit = { 
+			exists = from.owner
+			from.owner = {
+				OR = {
+					has_origin = origin_sm_cryogenesis
+					AND = {
+						NOT = {
+							has_origin = origin_sm_cryogenesis
+						}
+						any_owned_species = {
+							OR = {
+								has_trait = trait_pc_sm_cryoworld_preference
+								has_trait = trait_sm_cryogenesis_machine
+							}
+						}
+					}
+				}
+			}
+		}
+		custom_tooltip = { # Cryospecies pack block
+			success_text = SM_ICEPOPS_DIE_WITHOUT_COLD
+			OR = {
+				has_trait = trait_pc_sm_cryoworld_preference
+				has_trait = trait_sm_cryogenesis_machine
+			}
+			from = {
+				exists = owner
+				owner = {	# Extracheck
+					has_origin = origin_sm_cryogenesis
+				}
+				OR = {	# Bad climate
+					is_dry = yes
+					is_wet = yes
+				}
+				NOR = {	# Is becoming a cryoworld
+					has_modifier = pm_sm_cryogenesis_1	# 1 year
+					has_modifier = pm_sm_cryogenesis_2	# 5 year
+					has_modifier = pm_sm_cryogenesis_3	# 10 year
+				}
+			}
+		}	
+	}
+	else = {
+		always = no
+	}
+}
+
+# This = country
+can_build_branch_offices = {
+	custom_tooltip = {
+		fail_text = BRANCH_OFFICE_NOT_MEGACORP
+		OR = {
+			is_megacorp = yes
+			# Warship Girls R And MIST Species
+			AND = {
+				has_authority = auth_shenhai
+				OR = {
+					has_country_flag = pantsu_shop_origin
+					has_valid_civic = civic_sh_criminal_syndicate
+				}
+			}
+			# Azur Lane Stellaris DLC
+			has_authority = auth_azur_lane_0
+			has_authority = auth_azur_lane_1
+			has_authority = auth_azur_lane_2
+			has_authority = auth_azur_lane_K
+			# Human Fallen Empires
+			is_country_type = hfe_pirate
+			# More Corporate Authorities
+			has_valid_civic = civic_galactic_sovereign_megacorp
+			# Arknights Near Future
+			has_valid_civic = civic_business_union
+		}
+	}
+}
+
+# This = country
+can_support_branch_offices = {
+	custom_tooltip = {
+		fail_text = BRANCH_OFFICE_NOT_FALLEN_EMPIRES
+		NOR = {
+			merg_is_fallen_empire = yes
+			merg_is_awakened_fe = yes
+			# Warship Girls R And MIST Species
+			has_authority = auth_azur_dictatorial
+		}
+	}
+	custom_tooltip = {
+		fail_text = BRANCH_OFFICE_NOT_ON_MEGACORP_PLANET
+		NOR = {
+			AND = {
+				has_more_authorities = no
+				is_megacorp = yes
+			}
+			# Warship Girls R And MIST Species
+			AND = {
+				has_authority = auth_shenhai
+				OR = {
+					has_country_flag = pantsu_shop_origin
+					has_valid_civic = civic_sh_criminal_syndicate
+				}
+			}
+			# Azur Lane Stellaris DLC
+			has_authority = auth_azur_lane_1
+			# Reworked Advanced Ascension
+			is_subject_type = AAR_SBJ_subsidiary
+			# More Corporate Authorities
+			has_valid_civic = civic_galactic_sovereign_megacorp
+			# Arknights Near Future
+			has_valid_civic = civic_business_union
+		}
+	}
+	custom_tooltip = {
+		fail_text = BRANCH_OFFICE_NOT_REGULAR_EMPIRE
+		is_regular_empire = yes
+	}
+	# More Authorities
+	# As some mods allow megacorps to build branch offices in other megacorps, we need to check that we're not building one on our own empire.
+	custom_tooltip = {
+		fail_text = ACTION_RECIPIENT_NOT_YOUR_CORP
+		OR = {
+			has_more_authorities = no
+			AND = {
+				has_more_authorities = yes
+				NAND = {
+					is_megacorp = yes
+					is_subject = no
+				}
+			}
+		}
+	}
+}
+
+# This = planet
+# Root = country
+can_build_branch_office_on_planet = {
+	custom_tooltip = {
+		fail_text = requires_recipient_not_fanatic_purifiers
+		exists = owner
+		owner = {
+			OR = {
+				is_same_species = root
+				NOT = { has_valid_civic = civic_fanatic_purifiers }
+			}
+		}
+	}
+	custom_tooltip = {
+		fail_text = BRANCH_OFFICE_NOT_COMMERCIAL_PACT
+		exists = owner
+		OR = {
+			root = {
+				OR = {
+					is_criminal_syndicate = yes
+					# Azur Lane Stellaris DLC
+					has_authority = auth_azur_lane_1
+				}
+			}
+			owner = { has_commercial_pact = root }
+			owner = { is_in_federation_with = root }
+			# Expanded Traits, Civics, Pops, and More
+			AND = {
+				has_expanded_pops = yes
+				owner = { has_country_flag = cb_markets_opened@root }
+			}
+			# Warship Girls R And MIST Species
+			AND = {
+				owner = {
+					has_country_flag = lose_wg_shop_war
+				}
+				root = {
+					OR = {
+						has_country_flag = pantsu_shop_origin
+						has_valid_civic = civic_sh_criminal_syndicate
+					}
+				}
+			}
+			# Azur Lane Stellaris DLC
+			owner = {
+				AND = {
+					OR = {
+						has_authority = auth_azur_lane_2
+						has_authority = auth_azur_lane_0
+						has_authority = auth_azur_lane_K
+					}
+					is_same_value = root
+				}
+			}
+			# Human Fallen Empires
+			root = {
+				is_country_type = hfe_pirate
+				is_forced_friendly = prev.owner
+			}
+			# Vanilla
+			# allow branch offices in subsidiaries and vice versa
+			root = {
+				is_subject = yes
+				OR = {
+					is_subject_type = subsidiary
+					# Reworked Advanced Ascension
+					is_subject_type = AAR_SBJ_subsidiary
+				}
+				overlord = { is_same_value = prevprev.owner }
+			}
+			owner = {
+				is_subject = yes
+				OR = {
+					is_subject_type = subsidiary
+					# Reworked Advanced Ascension
+					is_subject_type = AAR_SBJ_subsidiary
+					# Warship Girls R And MIST Species
+					overlord = { has_authority = auth_warshipgirls }
+				}
+				overlord = { is_same_value = root }
+			}
+			AND = {
+				root = { has_valid_civic = civic_galactic_sovereign_megacorp }
+				owner = { is_galactic_community_member = yes }
+			}
+			AND = {
+				root = { has_modifier = imperial_charter }
+				owner = { is_galactic_community_member = yes }
+			}
+			# Vassals Expanded and Reworked
+			# allow branch offices in all subjects and vice versa
+			AND = {
+				has_vassals_expanded = yes
+				OR = {
+					root = {
+						is_subject = yes
+						overlord = { is_same_value = prevprev.owner }
+					}
+					owner = {
+						is_subject = yes
+						overlord = { is_same_value = root }
+					}
+				}
+			}
+		}
+	}
+	custom_tooltip = {
+		fail_text = BRANCH_OFFICE_CRIMINAL_HERITAGE_HAS_TRUCE
+		exists = owner
+		OR = {
+			root = { is_criminal_syndicate = no }
+			owner = {
+				NOR = {
+					has_truce = root
+					is_at_war_with = root
+				}
+			}
+		}
+		# Azur Lane Stellaris DLC
+		NOT = { 
+			root = {
+				has_authority = auth_azur_lane_1
+			}
+		}
+	}
+	custom_tooltip = {
+		fail_text = BRANCH_OFFICE_CRIMINAL_COOLDOWN
+		exists = owner
+		OR = {
+			root = { is_criminal_syndicate = no }
+			AND = {
+				root = {
+					is_criminal_syndicate = yes
+				}
+				NOT = { has_planet_flag = criminal_branch_closed_cooldown_planet@root }
+			}
+		}
+		# Azur Lane Stellaris DLC
+		NOT = { 
+			root = {
+				has_authority = auth_azur_lane_1
+			}
+		}
+	}
+	# Warship Girls R And MIST Species
+	custom_tooltip = {
+		fail_text = requires_recipient_not_warshipgirls
+		exists = owner
+		owner = {
+			NOR = {
+				has_authority = auth_warshipgirls 
+				AND = {
+					has_authority = auth_shenhai
+					OR = {
+						has_country_flag = pantsu_shop_origin
+						has_valid_civic = civic_sh_criminal_syndicate
+					}
+				}
+			}
+		}
+	}
+	# More Corportate Authorities
+	# principled rogues won't build branch offices in countries they like
+	hidden_trigger = {
+		OR = {
+			NOT = {
+				root = {
+					has_ai_personality = principled_rogues
+					is_ai = yes
+				}
+			}	
+			owner = {
+				their_opinion = { who = root value < 0 }
+			}
+			owner = {
+				their_opinion = { who = root value < 20 }
+				NOT = {
+					has_opinion_modifier = { who = root modifier = opinion_new_contact is_reverse = yes }
+				}
+			}
+		}
+	}
+}
+
+# This = country
+# Checked by is_criminal_syndicate trigger
+is_criminal_syndicate_rule = {
+	AND = {
+		is_megacorp = yes
+		OR = {
+			has_valid_civic = civic_criminal_heritage
+			# The Empty Vagrant
+			has_valid_civic = civic_ev_criminal_ship
+		}
+	}
+}
+
+# This = planet
+can_crossbreed_species_on_planet = {
+	exists = owner
+	NOT = { has_global_flag = z_pf2_flg_glbl_no_hybird } # Better Performance & Utilities
+	OR = {
+		owner = { has_ascension_perk = ap_xeno_compatibility }
+		# Red Light Demeanor
+		has_building = building_brothel_house
+		has_building = building_brothel_house_branch_office 
+	}
+	count_species = {
+		limit = {
+			is_crossbreeding_possible = yes
+		}
+		count >= 2
+	}
+	# Warship Girls R And MIST Species
+	any_owned_species = {
+		NOR = {
+			is_archetype = WARSHIPGIRL
+			is_archetype = SHENHAI
+			is_archetype = UNITED_FLEET 
+		}
+	}
+	# Red Light Demeanor
+	NOT = { owner = { has_country_flag = redlight_no_crossbreeding } }
+}
+
+# This = species one
+# Root = species two
+can_crossbreed_species = {
+	is_crossbreeding_possible = yes
+	root = { is_crossbreeding_possible = yes }
+	NOR = {
+		is_subspecies = root
+		root = { is_subspecies = prev }
+	}
+	# Warship Girls R And MIST Species
+	NAND = {
+		has_warship_girls = yes
+		any_owned_species = { has_wg_traits = yes }
+	}
+	root = {
+		NAND = {
+			has_warship_girls = yes
+			any_owned_species = { has_wg_traits = yes }
+		}
+	}
+}
+
+# can_win_timed_victory
+
+# This = country
+can_use_galactic_market = {
+	OR = {
+		merg_is_default_empire = yes
+		# ACOT
+		is_country_type = original_empire_active
+		# The Empty Vagrant
+		NOT = {
+			has_policy_flag = ev_no_use_galactic_market
+		}
+	}
+	NOR = {
+		has_valid_civic = civic_fanatic_purifiers
+		has_valid_civic = civic_hive_devouring_swarm
+		has_valid_civic = civic_machine_terminator
+		# Underground Realms
+		has_country_flag = dark_side
+	}
+}
+
+# root = country
+# this = pop
+can_be_sold_on_slave_market = {
+	exists = owner
+	OR = {
+		is_enslaved = yes
+		is_non_sapient_robot = yes
+		is_shackled_robot = yes
+		is_being_purged = yes # Ariphaos Patch
+		# Expanded Traits, Civics, Pops, and More
+		AND = {
+			ROOT = { allows_slavery = yes }
+			has_job = servant_noble
+		}
+	}
+	# Expanded Traits, Civics, Pops, and More
+	NOT = {
+		owner = { has_country_flag = gai_machines_have_organics }
+	}
+	OR = {
+		ROOT = { is_ai = no }
+		AND = {
+			OR = { is_unemployed = yes has_job = servant_noble }
+			planet = {
+				count_owned_pop = {
+					count > 2
+					limit = {
+						OR = { is_unemployed = yes has_job = servant_noble }
+						NOR = {
+							is_pop_category = specialist
+							is_pop_category = ruler
+						}
+					}
+				}
+			}
+		}
+		AND = {
+			OR = { has_job = servant has_job = servant_noble }
+			planet = {
+				free_amenities > 20
+			}
+		}
+	}
+	# Vanilla
+	OR ={
+		root = { is_ai = no }
+		# has_citizenship_rights = no # Ariphaos Patch
+		AND = {
+			is_unemployed = yes
+			is_being_assimilated = no # Ariphaos Patch
+			planet = {
+				num_unemployed > 2 # Ariphaos Patch, vanilla = 3
+			}
+		}
+		# Ariphaos Patch
+		OR = {
+			NOT = { has_trait = trait_syncretic_proles }
+			ROOT = { NOT = { has_origin = origin_syncretic_evolution } }
+		}
+	}
+	if = {
+		limit = {
+			has_global_flag = organic_slave_trade_banned_flag
+		}
+		is_organic_species = no
+	}
+	if = {
+		limit = {
+			has_global_flag = sentient_slave_trade_banned_flag
+		}
+		is_sapient = no
+	}
+	# Vanilla
+	NOR = {
+		# Since they can't reproduce, they die out too fast for anyone to want to buy them.
+		has_trait = trait_clone_soldier_infertile
+		has_trait = trait_clone_soldier_infertile_full_potential
+		# Diagraphers Trait Mod
+		has_trait = trait_living_architecture
+		has_trait = trait_rooted_adults_rooted
+		# Warship Girls R And MIST Species
+		AND = {
+			has_warship_girls = yes
+			has_wg_traits = yes
+		}
+		# Plentiful Perks
+		has_trait = trait_plentiful_traditions_cocoon
+	}
+}
+
+# This = country
+can_be_part_of_galactic_community = {
+	custom_tooltip = {
+		fail_text = "community_default_failtext"
+		OR = {
+			merg_is_default_empire = yes
+			# ACOT
+			is_country_type = original_empire_active
+		}
+	}
+	custom_tooltip = {
+		fail_text = "community_homicidal_failtext"
+		NOR = {
+			has_valid_civic = civic_fanatic_purifiers
+			has_valid_civic = civic_hive_devouring_swarm
+			has_valid_civic = civic_machine_terminator
+			# Underground Realms
+			has_country_flag = dark_side
+		}
+	}
+	custom_tooltip = {
+		fail_text = "community_declared_crisis_failtext"
+		has_been_declared_crisis = no
+	}
+	custom_tooltip = {
+		fail_text = "community_declared_crisis_failtext"
+		#fail_text = "community_overlord_declared_crisis_failtext"
+		OR = {
+			NOT = { exists = overlord }
+			overlord = { has_been_declared_crisis = no }
+			# Warship Girls R And MIST Species
+			NOT = { has_country_flag = wgfm_quit_community }
+		}
+	}
+}
+
+# This = country
+can_be_part_of_galactic_empire = {
+	custom_tooltip = {
+		fail_text = "community_default_failtext"
+		merg_is_default_empire = yes
+	}
+	custom_tooltip = {
+		fail_text = "community_homicidal_failtext"
+		NOR = {
+			has_valid_civic = civic_fanatic_purifiers
+			has_valid_civic = civic_hive_devouring_swarm
+			has_valid_civic = civic_machine_terminator
+			# Underground Realms
+			has_country_flag = dark_side
+		}
+	}
+	custom_tooltip = {
+		fail_text = "community_declared_crisis_failtext"
+		has_been_declared_crisis = no
+	}
+	custom_tooltip = {
+		fail_text = "community_declared_crisis_failtext"
+		OR = {
+			NOT = { exists = overlord }
+			overlord = { has_been_declared_crisis = no }
+			# Warship Girls R And MIST Species
+			NOT = { has_country_flag = wgfm_quit_community }
+		}
+	}
+}
+
+# This = country
+can_see_galactic_community = {
+	OR = {
+		has_country_flag = galcom_form_aye
+		has_country_flag = galcom_form_nay
+		is_galactic_community_member = yes
+		# Underground Realms
+		has_country_flag = dark_side
+		# ACOT
+		is_country_type = original_empire_active
+		# ZOFE
+		is_country_type = lost_empire
+	}
+	custom_tooltip = {
+		fail_text = "community_declared_crisis_failtext"
+		NOT = { has_country_flag = wgfm_quit_community }
+	}
+}
+
+# This = country
+can_be_part_of_galactic_council = {
+	OR = {
+		merg_is_default_empire = yes
+		# ACOT
+		is_country_type = original_empire_active
+	}
+	NOR = {
+		has_valid_civic = civic_fanatic_purifiers
+		has_valid_civic = civic_hive_devouring_swarm
+		has_valid_civic = civic_machine_terminator
+		# Underground Realms
+		has_country_flag = dark_side
+	}
+	custom_tooltip = {
+		fail_text = "community_declared_crisis_failtext"
+		NOT = { has_country_flag = wgfm_quit_community }
+	}
+}
+
+# must_be_advanced_empire
+# is_allowed_to_be_advanced_empire
+# has_enough_pops_for_necrophage_on_planet
+
+# Root = current planet
+# This = pop
+# Purge, Sapience, Migration Controls policy (ignored by Gestalts and Synths), and target habitability are checked in code.
+can_pop_auto_migrate = {
+	OR = {
+		is_unemployed = yes
+		# z Expanded Traits, Civics, Pops, and More
+		has_job = grunt
+		has_job = slave_toiler
+		# Human Fallen Empire
+		AND = {
+			has_human_fallen = yes
+			hfe_trigger_unemployed_auto_migrate = yes
+		}
+	}
+	is_being_assimilated = no
+	OR = {
+		AND = {
+			is_shackled_robot = no
+			is_enslaved = no
+		}
+		planet = {
+			has_building = building_slave_processing
+		}
+		# Human Fallen Empire
+		AND = {
+			has_human_fallen = yes
+			owner = {
+				or = {
+					is_country_type = hfe_pirate
+					hfe_trigger_is_human_fallen = yes
+				}
+			}
+		}
+	}
+	# Diagraphers Trait Mod
+	NOR = {
+		has_trait = trait_living_architecture
+		has_trait = trait_rooted_adults_rooted
+		has_trait = trait_presapient_earthbound
+	}
+}
+
+# This = planet
+# Checked before can_pop_auto_migrate to save performance
+can_planet_auto_migrate = {
+	# Production Revolution
+	NAND = {
+		exists = owner
+		owner = { has_country_flag = z_pr_flg_cntr_reg }
+		NOT = { has_planet_flag = z_pr_flg_plnt_ignore }
+	}
+	# Vanilla
+	NOT = { has_modifier = planet_culture_shock }
+	OR = {
+		colony_age > 60
+		is_capital = yes # Don't break Doomsday!
+		# z Expanded Traits, Civics, Pops, and More
+		has_planet_flag = void_dweller_habitat # Don't break Void Dwellers!
+		# Planetary Diversity - Habitats
+		has_planet_flag = pd_habitat_start_luna
+		has_planet_flag = pd_habitat_start_mars
+	}
+	exists = owner
+	owner = {
+		is_country_type_with_subjects = yes
+	}
+	# Better Performance & Utilities
+	NOT = { has_global_flag = z_pf2_flg_vam_disabled }
+}
+
+can_planet_receive_auto_migration = {
+	NOR = {
+		planet_devastation >= 10
+		has_modifier = planet_culture_shock
+		merg_is_doomed_planet = yes
+	}
+}
+
+# can_have_first_contact
+# can_use_envoys_to_raise_imperial_authority
+# can_use_envoys_to_lower_imperial_authority
+# should_planetary_automate
+# can_fill_drone_job
+
+#this/root = pop
+#checked if job's possible_precalc = can_fill_worker_job
+can_fill_worker_job = {
+	custom_tooltip = WORKER_JOB_TRIGGER
+	hidden_trigger = {
+		NOT = { has_ethic = ethic_gestalt_consciousness }
+		exists = owner
+		OR = {
+			is_being_purged = no
+			# Expanded Traits, Civics, Pops, and More
+			has_purge_type = { type = purge_displacement }
+			has_purge_type = { type = purge_neutering }
+		}
+		is_being_assimilated = no
+		NOT = { has_citizenship_type = { type = citizenship_organic_trophy } }
+		NAND = {
+			has_citizenship_type = { type = citizenship_slavery }
+			OR = {
+				has_slavery_type = { type = slavery_livestock }
+				has_slavery_type = { type = slavery_matrix }
+			}
+		}
+		if = {
+			limit = {
+				divinity_right_to_work_job_check_trigger_exempt = no
+			}
+			divinity_right_to_work_job_check_trigger_worker = yes
+		}
+		# Diagraphers Trait mod
+		if = {
+			limit = {
+				has_diag_trait = yes
+			}
+			OR = {
+				traits_restrict_worker_jobs = no
+				has_pop_flag = allow_technician_traits
+				has_pop_flag = allow_miner_traits
+				has_pop_flag = allow_farmer_traits
+				has_pop_flag = allow_clerk_traits
+				has_pop_flag = allow_soldier_traits
+				has_pop_flag = allow_crystal_miner_traits
+				has_pop_flag = allow_mote_harvester_traits
+				has_pop_flag = allow_gas_extractor_traits
+				has_pop_flag = allow_priest_traits
+				has_pop_flag = allow_bluelotus_technician_traits
+				has_pop_flag = allow_odd_factory_worker_traits
+				has_pop_flag = allow_cave_cleaner_traits
+				has_pop_flag = allow_titan_hunter_traits
+			}
+		}
+	}
+}
+
+#this/root = pop
+#checked if job's possible_precalc = can_fill_specialist_job
+can_fill_specialist_job = {
+	custom_tooltip = SPECIALIST_JOB_TRIGGER
+	hidden_trigger = {
+		NOT = { has_ethic = ethic_gestalt_consciousness }
+		exists = owner
+		OR = {
+			is_enslaved = no
+			has_slavery_type = { type = slavery_indentured }
+			# Expanded Traits, Civics, Pops, and More
+			AND = {
+				NOT = { host_has_dlc = "Utopia" }
+				is_same_species = owner_main_species
+				owner = {
+					OR = {
+						has_valid_civic = civic_indentured_assets
+						has_valid_civic = civic_slaver_guilds
+					}
+				}
+			}
+		}
+		is_being_purged = no
+		is_being_assimilated = no
+		NOR = {
+			has_trait = trait_syncretic_proles
+			has_trait = trait_nerve_stapled
+			has_trait = trait_presapient_docile_livestock
+			# Diagraphers Trait mod
+			has_trait = trait_subsapient_form
+			# Expanded Traits, Civics, Pops, and More
+			has_trait = trait_tree_caretaker
+			# Ethics and Civics Alternative - Redux
+			has_trait = trait_slave_gene
+		}
+		OR = {
+			NOT = { has_trait = trait_mechanical }
+			owner = { has_technology = tech_droid_workers }
+		}
+		NOT = { has_citizenship_type = { type = citizenship_organic_trophy } }
+		if = {
+			limit = {
+				divinity_right_to_work_job_check_trigger_exempt = no
+			}
+			divinity_right_to_work_job_check_trigger_specialist = yes
+		}
+		# Diagraphers Trait mod
+		if = {
+			limit = {
+				has_diag_trait = yes
+			}
+			OR = {
+				traits_restrict_specialist_jobs = no
+				has_pop_flag = allow_priest_traits
+				has_pop_flag = allow_researcher_traits
+				has_pop_flag = allow_foundry_traits
+				has_pop_flag = allow_enforcer_traits
+				has_pop_flag = allow_artisan_traits
+				has_pop_flag = allow_entertainer_traits
+				has_pop_flag = allow_duelist_traits
+				has_pop_flag = allow_culture_worker_traits
+				has_pop_flag = allow_bureaucrat_traits
+				has_pop_flag = allow_chemist_traits
+				has_pop_flag = allow_translucer_traits
+				has_pop_flag = allow_gas_refiner_traits
+				has_pop_flag = allow_roboticist_traits
+				has_pop_flag = allow_healthcare_traits
+				has_pop_flag = allow_manager_traits
+				has_pop_flag = allow_necromancer_traits
+				has_pop_flag = allow_underground_trade_worker_traits
+				has_pop_flag = allow_dimensional_portal_researcher_traits
+				has_pop_flag = allow_gas_plant_engineer_traits
+				has_pop_flag = allow_robot_caretaker_traits
+				planet = { has_building = building_colony_shelter }
+			}
+		}
+	}
+}
+
+#this/root = pop
+#checked if job's possible_precalc = can_fill_ruler_job
+can_fill_ruler_job = {
+	if = {
+		limit = {
+			exists = owner
+			owner = {
+				has_origin = origin_necrophage
+				has_trait = trait_necrophage
+			}
+		}
+		custom_tooltip = {
+			text = RULER_JOB_NECROPHAGE_TRIGGER
+			has_trait = trait_necrophage
+			is_enslaved = no
+			is_being_purged = no
+			is_being_assimilated = no
+			NOR = {
+				has_trait = trait_syncretic_proles
+				has_trait = trait_nerve_stapled
+				has_trait = trait_zombie
+				# Diagraphers Trait mod
+				has_trait = trait_subsapient_form
+				# Ethics and Civics Alternative - Redux
+				has_trait = trait_symbiotic
+				has_trait = trait_slave_gene
+			}
+		}
+	}
+	# Silfae's Portraits: Revisited - Holofrixit Revisited
+	else_if = {
+		limit = {
+			has_holofrixit = yes
+			exists = owner
+			owner = {
+				is_gestalt = no
+				has_origin = origin_holofrixit
+				has_trait = trait_holooverseer
+			}
+		}
+		can_fill_holosphere_ruler_job = yes
+	}
+	else_if = {
+		custom_tooltip = RULER_JOB_TRIGGER
+		hidden_trigger = {
+			NOT = { has_ethic = ethic_gestalt_consciousness }
+			exists = owner
+			is_enslaved = no
+			is_being_purged = no
+			is_being_assimilated = no
+			NOR = {
+				has_trait = trait_syncretic_proles
+				has_trait = trait_nerve_stapled
+				has_trait = trait_presapient_docile_livestock
+				# Diagraphers Trait mod
+				has_trait = trait_subsapient_form
+				# Expanded Traits, Civics, Pops, and More
+				has_trait = trait_tree_caretaker
+				# Ethics and Civics Alternative - Redux
+				has_trait = trait_symbiotic
+				has_trait = trait_slave_gene
+			}
+			OR = {
+				NOT = { has_trait = trait_mechanical }
+				AND = {
+					owner = { has_technology = tech_synthetic_workers }
+					owner = { has_policy_flag = ai_full_rights }
+				}
+			}
+			NOT = { has_citizenship_type = { type = citizenship_organic_trophy } }
+			if = {
+				limit = {
+					divinity_right_to_work_job_check_trigger_exempt = no
+				}
+				divinity_right_to_work_job_check_trigger_ruler = yes
+			}
+		}
+	}
+	# Diagraphers Trait mod
+	else = {
+		hidden_trigger = {
+			has_holofrixit = yes
+			NAND = {
+				has_trait = trait_dimorphic_female
+				has_reproductive_politics = yes
+				owner = {
+					has_valid_civic = civic_patriarchy
+				}
+			}
+			OR = {
+				traits_restrict_specialist_jobs = no
+				has_pop_flag = allow_priest_traits
+				has_pop_flag = allow_researcher_traits
+				has_pop_flag = allow_administrator_traits
+				has_pop_flag = allow_merchant_traits
+				has_pop_flag = allow_executive_traits
+				owner = { has_valid_civic = civic_aristocratic_elite }
+			}
+		}
+	}
+}
+
+# should_planetary_automate

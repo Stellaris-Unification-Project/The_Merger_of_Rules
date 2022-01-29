@@ -1,0 +1,2382 @@
+# scripted triggers for planet killers
+
+# Vanilla
+can_destroy_planet_with_PLANET_KILLER_CRACKER = {
+	custom_tooltip = {
+		fail_text = is_not_a_standard_planet_or_megastructure
+		is_a_planet_megastructure = yes
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+	OR = {
+		custom_tooltip = {
+			text = is_not_hostile_cracker
+			OR = {
+				AND = {
+					exists = space_owner
+					space_owner = {
+						OR = {
+							is_at_war_with = from.owner
+							is_country_type = swarm
+							is_country_type = extradimensional
+							is_country_type = extradimensional_2
+							is_country_type = extradimensional_3
+							is_country_type = ai_empire
+						}
+					}
+				}
+				AND = { # colony
+					exists = owner
+					owner = {
+						OR = {
+							is_at_war_with = from.owner
+							is_country_type = swarm
+							is_country_type = extradimensional
+							is_country_type = extradimensional_2
+							is_country_type = extradimensional_3
+							is_country_type = ai_empire
+						}
+					}
+				}
+				AND = { # primitive
+					exists = space_owner
+					exists = owner
+					owner = {
+						is_primitive = yes
+					}
+					space_owner = {
+						OR = {
+							is_at_war_with = from.owner
+							is_country_type = swarm
+							is_country_type = extradimensional
+							is_country_type = extradimensional_2
+							is_country_type = extradimensional_3
+							is_country_type = ai_empire
+						}
+					}
+				}
+			}
+		}
+		custom_tooltip = {
+			text = not_barren_molten_frozen_toxic_test_fire
+			NOT = { exists = owner }
+			OR = {
+				NOT = { exists = space_owner }
+				AND = {
+					exists = space_owner
+					space_owner = { is_same_empire = from.owner }
+				}
+			}
+			OR = {
+				# Rewriting this part for max compatibility, inspired by Planetary Diversity
+				colonizable_planet = yes
+				is_artificial = yes
+				merg_is_crackable_planet = yes
+			}
+		}
+	}
+}
+
+can_destroy_planet_with_PLANET_KILLER_SHIELDER = {
+	custom_tooltip = {
+		fail_text = is_not_a_habitable_planet_or_megastructure
+		OR = {
+			is_a_habitable_planet_megastructure = yes
+			is_planet_class = pc_ai
+			merg_is_forbidden_target = no
+			# APSR
+			# is_planet_class = pc_apsr_ancient
+			# is_planet_class = pc_apsr_unique
+		}
+	}
+	custom_tooltip = {
+		fail_text = is_not_hostile_or_primitive
+		OR = {
+			planet_is_hostile_or_crisis = yes
+			AND = {
+				exists = owner
+				owner = {
+					is_country_type = primitive
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = owner
+			owner = { is_country_type = primitive }
+		}
+		custom_tooltip = {
+			fail_text = primitives_not_active_or_full_interference
+			from.owner = {
+				OR = {
+					has_policy_flag = interference_active
+					has_policy_flag = interference_full
+				}
+			}
+		}
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+}
+
+can_destroy_planet_with_PLANET_KILLER_NEUTRON = {
+	custom_tooltip = {
+		fail_text = is_not_a_habitable_planet_or_megastructure
+		OR = {
+			is_a_habitable_planet_megastructure = yes
+			merg_is_forbidden_target = no
+			# APSR
+			# is_planet_class = pc_apsr_ancient
+			# is_planet_class = pc_apsr_unique
+		}
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+	custom_tooltip = {
+		fail_text = is_not_hostile
+		OR = {
+			planet_is_hostile_or_crisis = yes
+			AND = {
+				exists = owner
+				owner = {
+					is_country_type = primitive
+				}
+				from.owner = {
+					is_xenophobe = yes
+				}
+			}
+			AND = { # at war with primitive space owner
+				exists = space_owner
+				exists = owner
+				owner = {
+					is_primitive = yes
+				}
+				space_owner = {
+					OR = {
+						is_at_war_with = from.owner
+						is_country_type = swarm
+						is_country_type = extradimensional
+						is_country_type = extradimensional_2
+						is_country_type = extradimensional_3
+						is_country_type = ai_empire
+					}
+				}
+			}
+		}
+	}
+	custom_tooltip = {
+		fail_text = is_unpopulated
+		OR = {
+			num_pops > 0
+			is_planet_class = pc_infested
+		}
+	}
+}
+
+can_destroy_planet_with_PLANET_KILLER_GODRAY = {
+	custom_tooltip = {
+		fail_text = is_not_a_habitable_planet_or_megastructure
+		OR = {
+			is_a_habitable_planet_megastructure = yes
+			is_planet_class = pc_ai
+			# APSR
+			# is_planet_class = pc_apsr_ancient
+			# is_planet_class = pc_apsr_unique
+		}
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+	custom_tooltip = {
+		#success_text = "is at war with player"
+		fail_text = is_not_hostile_or_primitive
+		OR = {
+			planet_is_hostile = yes
+			is_planet_class = pc_ai
+			AND = {
+				exists = owner
+				owner = { is_country_type = primitive }
+			}
+			AND = {
+				exists = owner
+				owner = { is_same_empire = from.owner }
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = owner
+			owner = { is_country_type = primitive }
+		}
+		custom_tooltip = {
+			fail_text = primitives_not_active_or_full_interference
+			from.owner = {
+				OR = {
+					has_policy_flag = interference_active
+					has_policy_flag = interference_full
+				}
+			}
+		}
+	}
+	# target own colony
+	if = {
+		limit = {
+			NOR = {
+				planet_is_hostile = yes
+				AND = {
+					exists = owner
+					owner = { is_country_type = primitive }
+				}
+			}
+			exists = owner
+			owner = {
+				is_same_value = from.owner
+			}
+		}
+		custom_tooltip = {
+			text = not_owned_test_fire
+			exists = owner
+			owner = {
+				is_same_value = from.owner
+			}
+		}
+	}
+}
+
+can_destroy_planet_with_PLANET_KILLER_NANOBOTS = {
+	custom_tooltip = {
+		fail_text = is_not_a_habitable_planet_or_megastructure
+		is_a_habitable_planet_megastructure = yes
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+	custom_tooltip = {
+		fail_text = is_not_hostile_or_primitive
+		OR = {
+			planet_is_hostile = yes
+			AND = {
+				exists = owner
+				owner = {
+					is_country_type = primitive
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = owner
+			owner = { is_country_type = primitive }
+		}
+		custom_tooltip = {
+			fail_text = primitives_not_in_borders
+			exists = space_owner
+			space_owner = { is_same_empire = from.owner }
+		}
+		custom_tooltip = {
+			fail_text = primitives_not_full_interference
+			from.owner = {
+				has_policy_flag = interference_full
+			}
+		}
+	}
+	custom_tooltip = {
+		fail_text = no_assimilatable_pops
+		any_owned_pop = {
+			is_valid_pop_for_PLANET_KILLER_NANOBOTS = yes
+		}
+	}
+}
+
+can_destroy_planet_with_PLANET_KILLER_DELUGE = {
+	custom_tooltip = {
+		fail_text = is_habitable_non_artificial
+		OR = {
+			is_colonizable = yes
+			is_colony = yes
+		}
+		merg_is_forbidden_target = no
+		is_artificial = no
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOT = { has_active_building = building_phanon_psg } # AOT
+	}
+	custom_tooltip = {
+		fail_text = is_not_oceanic
+		NOT = { is_planet_class = pc_ocean }
+	}
+	if = {
+		limit = { is_inside_border = from.owner }
+		if = {
+			limit = { #Uninhabited and primitive planets are always fine, if own colony then check if pops would be purged
+				exists = owner
+				owner = { is_same_value = from.owner }
+				any_owned_species = {
+					NOT = { has_trait = trait_aquatic }
+				}
+			}
+			custom_tooltip = {
+				fail_text = requires_purge_allowed
+				success_text = will_purge_non_aquatic_pops
+				from.owner = {
+					is_ai = no
+					has_policy_flag = purge_allowed
+				}
+			}
+		}
+	}
+	else = {
+		custom_tooltip = {
+			fail_text = is_not_hostile_or_primitive_or_ours
+			OR = {
+				planet_is_hostile_or_crisis = yes
+				AND = {
+					exists = owner
+					owner = {
+						is_country_type = primitive
+					}
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = owner
+			owner = { is_country_type = primitive }
+		}
+		custom_tooltip = {
+			fail_text = primitives_not_in_borders
+			exists = space_owner
+			space_owner = { is_same_value = from.owner }
+		}
+		custom_tooltip = {
+			fail_text = primitives_not_full_interference
+			from.owner = {
+				has_policy_flag = interference_full
+			}
+		}
+	}
+}
+
+# Empire of Eveelution
+can_destroy_planet_with_PLANET_KILLER_EOE = {
+	custom_tooltip = {
+		fail_text = is_not_a_habitable_planet_or_megastructure
+		is_a_habitable_planet_megastructure = yes
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+	custom_tooltip = {
+		fail_text = is_not_hostile_or_primitive
+		OR = {
+			planet_is_hostile = yes
+			AND = {
+				exists = owner
+				owner = {
+					is_country_type = primitive
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = owner
+			owner = { is_country_type = primitive }
+		}
+		custom_tooltip = {
+			fail_text = primitives_not_in_borders
+			exists = space_owner
+			space_owner = { is_same_empire = from.owner }
+		}
+	}
+	custom_tooltip = {
+		fail_text = no_assimilatable_pops
+		any_owned_pop = {
+			is_valid_pop_for_PLANET_KILLER_NANOBOTS = yes
+		}
+	}
+}
+
+can_destroy_planet_with_PLANET_KILLER_FIRE_EOE = {
+	custom_tooltip = {
+		fail_text = is_not_a_standard_planet_or_megastructure
+		is_a_planet_megastructure = yes
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+	#custom_tooltip = {
+		#fail_text = is_not_hostile
+		OR = {
+			custom_tooltip = {
+				text = is_not_hostile_cracker
+				OR = {
+					AND = {
+						exists = space_owner
+						space_owner = {
+							OR = {
+								is_at_war_with = from.owner
+								is_country_type = swarm
+								is_country_type = extradimensional
+								is_country_type = extradimensional_2
+								is_country_type = extradimensional_3
+								is_country_type = ai_empire
+							}
+						}
+					}
+					AND = { # colony
+						exists = owner
+						owner = {
+							OR = {
+								is_at_war_with = from.owner
+								is_country_type = swarm
+								is_country_type = extradimensional
+								is_country_type = extradimensional_2
+								is_country_type = extradimensional_3
+								is_country_type = ai_empire
+							}
+						}
+					}
+					AND = { # primitive
+						exists = space_owner
+						exists = owner
+						owner = {
+							is_primitive = yes
+						}
+						space_owner = {
+							OR = {
+								is_at_war_with = from.owner
+								is_country_type = swarm
+								is_country_type = extradimensional
+								is_country_type = extradimensional_2
+								is_country_type = extradimensional_3
+								is_country_type = ai_empire
+							}
+						}
+					}
+				}
+			}
+			custom_tooltip = {
+				text = not_barren_molten_frozen_toxic_test_fire
+				NOT = { exists = owner }
+				OR = {
+					NOT = { exists = space_owner }
+					AND = {
+						exists = space_owner
+						space_owner = { is_same_empire = from.owner }
+					}
+				}
+				OR = {
+					uninhabitable_regular_planet = yes						
+					merg_is_crackable_planet = yes
+				}
+			}
+		}
+	#}
+}
+
+# AshArms Aquarius history
+can_destroy_planet_with_PLANET_KILLER_Ark_CRACKER = {
+	custom_tooltip = {
+		fail_text = is_your_megastructure_system
+		NOT = {
+			solar_system = {
+				has_star_flag = crisis_sphere_system@from.owner
+				any_system_megastructure = { has_megastructure_flag = crisis_sphere }
+			}
+		}
+	}
+	custom_tooltip = {
+		fail_text = is_not_star
+		is_star = yes
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_black_hole
+		merg_is_dense_star = no
+	}
+
+	custom_tooltip = {
+		fail_text = star_owner_is_not_hostile
+		OR = {
+			NOT = { exists = space_owner }
+			space_owner = { is_hostile = from.owner }
+			space_owner = { is_same_empire = from.owner }
+		}
+	}
+}
+
+can_destroy_planet_with_PLANET_KILLER_JUMP_ADF = {
+	custom_tooltip = {
+		fail_text = is_not_a_standard_planet_or_megastructure
+		is_a_planet_megastructure = yes
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+		OR = {
+			custom_tooltip = {
+				text = is_not_hostile_cracker
+				OR = {
+					AND = {
+						exists = space_owner
+						space_owner = {
+							OR = {
+								is_at_war_with = from.owner
+								is_country_type = swarm
+								is_country_type = extradimensional
+								is_country_type = extradimensional_2
+								is_country_type = extradimensional_3
+								is_country_type = ai_empire
+								is_same_value = from.owner # added condition if you own it								  
+							}
+						}
+					}
+					AND = { # colony
+						exists = owner
+						owner = {
+							OR = {
+								is_at_war_with = from.owner
+								is_country_type = swarm
+								is_country_type = extradimensional
+								is_country_type = extradimensional_2
+								is_country_type = extradimensional_3
+								is_country_type = ai_empire
+								is_same_value = from.owner # added condition if you own it								  
+							}
+						}
+					}
+					AND = { # primitive
+						exists = space_owner
+						exists = owner
+						owner = {
+							is_primitive = yes
+						}
+						space_owner = {
+							OR = {
+								is_at_war_with = from.owner
+								is_country_type = swarm
+								is_country_type = extradimensional
+								is_country_type = extradimensional_2
+								is_country_type = extradimensional_3
+								is_country_type = ai_empire
+								is_same_value = from.owner # added condition if you own it								  
+							}
+						}
+					}
+				}
+			}				   
+		}
+}
+
+# Ancient Empire
+can_destroy_planet_with_ag_ancient_epsilon_planet_killer_weapon = {
+	custom_tooltip = {
+		fail_text = "ag_requires_a_star_star_killer" 
+		NOR = {
+			is_planet_class = pc_ag_void_star
+			is_planet_class = pc_ag_void_planet
+			merg_is_forbidden_target = yes
+		}
+	}
+	custom_tooltip = {
+		fail_text = "ag_requires_is_star_star_killer" 
+		OR = {
+			AND = {
+				from.owner = {
+					has_country_flag = ag_ship_subsystem_enabled_501_19
+					OR = {
+						has_country_flag = ag_epsilon_star_killer_planet_killer_mode
+						has_country_flag = ag_epsilon_star_killer_planet_sweeper_mode
+					}
+				}
+				is_star = no
+			}
+			is_star = yes
+		}
+	}
+	custom_tooltip = {
+		fail_text = "ag_requires_no_compact_star_star_killer"
+		merg_is_dense_star = no
+	}
+	custom_tooltip = {
+		fail_text = "ag_requires_outside_border_star_killer"
+		NOR = {
+			AND = {
+				from.owner = {
+					NOR = {
+						has_country_flag = ag_epsilon_star_killer_planet_killer_mode
+						has_country_flag = ag_epsilon_star_killer_planet_sweeper_mode
+					}
+				}
+				is_inside_border = from.owner
+				solar_system = {
+					any_system_planet = {
+						OR = {
+							is_colony = yes
+							is_under_colonization = yes
+						}
+					}
+				}
+			}
+			AND = {
+				from.owner = {
+					OR = {
+						has_country_flag = ag_epsilon_star_killer_planet_killer_mode
+						has_country_flag = ag_epsilon_star_killer_planet_sweeper_mode
+					}
+				}
+				exists = owner
+				owner = { is_same_value = from.owner }
+			}
+		}
+	}
+	custom_tooltip = {
+		fail_text = "ag_requires_declares_war_star_killer"
+		OR = {
+			AND = {
+				from.owner = {
+					NOR = {
+						has_country_flag = ag_epsilon_star_killer_planet_killer_mode
+						has_country_flag = ag_epsilon_star_killer_planet_sweeper_mode
+					}
+				}
+				OR = {
+					is_inside_border = from.owner
+					solar_system = { NOT = { exists = space_owner } }
+					solar_system = { exists = space_owner space_owner = { is_hostile = from.owner } }
+				}
+			}
+			AND = {
+				from.owner = {
+					OR = {
+						has_country_flag = ag_epsilon_star_killer_planet_killer_mode
+						has_country_flag = ag_epsilon_star_killer_planet_sweeper_mode
+					}
+				}
+				NAND = {
+					exists = owner
+					owner = { NOT = { is_hostile = from.owner } }
+				}
+			}
+		}
+	}
+	custom_tooltip = {
+		fail_text = "ag_requires_no_pacifist_star_killer"
+		from.owner = {
+			is_pacifist = no
+		}
+	}
+	custom_tooltip = {
+		fail_text = "ag_requires_no_ancient_system" 
+		ag_is_ancient_system = no
+	}
+	custom_tooltip = {
+		fail_text = "ag_requires_no_zeta_crisis_system" 
+		NOT = { has_star_flag = ag_zeta_crisis_core_system }
+	}
+	custom_tooltip = {
+		fail_text = "ag_requires_no_special_system" 
+		ag_is_special_system = no
+	}
+	custom_tooltip = {
+		fail_text = "ag_requires_no_charging_star_killer"
+		from = { NOT = { any_owned_ship = {
+			is_ship_size = ag_epsilon_titan_1
+			has_ship_flag = ag_epsilon_firing_star_killer_weapon
+		} } }
+	}
+}
+
+# Corsair's Custom Empires: Eldanær Stellar Authority
+can_destroy_planet_with_PLANET_KILLER_SPORE_DISPERSAL = {
+	custom_tooltip = {
+		fail_text = is_not_a_habitable_planet_or_megastructure
+		# intentionally omits crisis planet types (pc_ai, pc_infested) because Pops can't live there
+		# intentionally omits pc_machine because only Driven Assimilator cyborgs or robotic Pops can live there
+		OR = {
+			habitable_planet = yes
+			is_planet_class = pc_nuked
+			AND = {
+				# pc_hive is only allowed for hive empires
+				FROM.owner = { is_hive_empire = yes }
+				is_planet_class = pc_hive
+			}
+			habitable_structure = yes
+		}
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+	custom_tooltip = {
+		fail_text = is_not_hostile_or_primitive
+		OR = {
+			planet_is_hostile = yes
+			AND = {
+				exists = owner
+				owner = { is_country_type = primitive }
+			}
+		}
+	}
+	if = {
+		limit = { exists = owner }
+		# primitive planet must be within borders
+		if = {
+			limit = { owner = { is_country_type = primitive } }
+			custom_tooltip = {
+				fail_text = primitives_not_in_borders
+				exists = space_owner
+				space_owner = { is_country = FROM.owner }
+			}
+		}
+		# planets owned by the attacker are targetable if they have any pops that can be necrophaged
+		else_if = {
+			limit = { is_owned_by = FROM.owner }
+			custom_tooltip = {
+				fail_text = no_necrophagable_pops
+				any_owned_pop = {
+					# similar logic as species_can_be_necrophaged (common\scripted_triggers\00_scripted_triggers.txt)
+					is_robot_pop = no
+					is_sapient = yes
+					NOT = { is_same_species = FROM.owner_species }
+					species = { species_has_happiness_with_owner = FROM.owner }
+				}
+			}
+		}
+		# otherwise at least half the pops must be either the main species of the attacker or necrophagable
+		else = {
+			custom_tooltip = {
+				fail_text = not_enough_necrophagable_pops
+				pop_percentage = {
+					percentage >= 0.5
+					limit = {
+						is_robot_pop = no
+						is_sapient = yes
+						# assumes that species of the same type as the attacker are compelled to revolt - so they count towards the minimum
+						species = { species_has_happiness_with_owner = FROM.owner }
+					}
+					exclude = {
+						is_robot_pop = no
+						is_sapient = no
+					}
+				}
+			}
+		}
+	}
+}
+
+# Warship Girls R And MIST Species
+can_destroy_planet_with_PLANET_KILLER_OVO = {
+	custom_tooltip = {
+		fail_text = is_not_a_habitable_planet_or_megastructure
+		is_a_habitable_planet_megastructure = yes
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+	custom_tooltip = {
+		#success_text = "is at war with player"
+		fail_text = is_not_hostile_or_primitive
+		OR = {
+			planet_is_hostile = yes
+			AND = {
+				exists = owner
+				owner = { is_country_type = primitive }
+			}
+			AND = {
+				exists = owner
+				owner = { is_same_value = from.owner }
+			}
+		}
+	}
+	# target own colony
+	if = {
+		limit = {
+			NOR = {
+				planet_is_hostile = yes
+				AND = {
+					exists = owner
+					owner = { is_country_type = primitive }
+				}
+			}
+			exists = owner
+			owner = {
+				is_same_value = from.owner
+			}
+		}
+		custom_tooltip = {
+			text = not_owned_test_fire
+			exists = owner
+			owner = {
+				is_same_value = from.owner
+			}
+		}
+	}
+}
+
+can_destroy_planet_with_PLANET_KILLER_PSH = {
+	custom_tooltip = {
+		fail_text = is_not_a_habitable_planet_or_megastructure
+		is_a_habitable_planet_megastructure = yes
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+	custom_tooltip = {
+		fail_text = is_shenhai
+		NOR = {
+			is_planet_class = pc_shenhai
+		}
+	}
+	custom_tooltip = {
+		fail_text = cannotdothis
+		NOR = {
+			is_planet_class = pc_ringworld_habitable
+			is_planet_class = pc_ringworld_habitable_damaged
+			is_planet_class = pc_habitat
+		}
+	}
+	custom_tooltip = {
+		#success_text = "is at war with player"
+		fail_text = our_planet_only
+		NOR = {
+			planet_is_hostile = yes
+			AND = {
+				exists = owner
+				owner = { is_country_type = primitive }
+			}
+		}
+	}
+	# target own colony
+	if = {
+		limit = {
+			NOR = {
+				planet_is_hostile = yes
+				AND = {
+					exists = owner
+					owner = { is_country_type = primitive }
+				}
+			}
+			exists = owner
+			owner = {
+				is_same_value = from.owner
+			}
+		}
+		custom_tooltip = {
+			text = not_owned_test_fire
+			exists = owner
+			owner = {
+				is_same_value = from.owner
+			}
+		}
+	}
+}
+
+can_destroy_planet_with_PLANET_KILLER_CM = {
+	custom_tooltip = {
+		fail_text = is_not_a_habitable_planet_or_megastructure
+		is_a_habitable_planet_megastructure = yes
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+	custom_tooltip = {
+		fail_text = is_not_hostile_or_primitive
+		OR = {
+			planet_is_hostile = yes
+			AND = {
+				exists = owner
+				owner = {
+					is_country_type = primitive
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = owner
+			owner = { is_country_type = primitive }
+		}
+		custom_tooltip = {
+			fail_text = primitives_not_in_borders
+			exists = space_owner
+			space_owner = { is_same_value = from.owner }
+		}
+	}
+	custom_tooltip = {
+		fail_text = no_cm_pops
+		any_owned_pop = {
+			is_valid_pop_for_PLANET_KILLER_CM = yes
+		}
+	}
+}
+
+can_destroy_planet_with_PLANET_KILLER_SK = {
+	custom_tooltip = {
+		fail_text = is_your_megastructure_system
+		NOT = {
+			solar_system = {
+				has_star_flag = crisis_sphere_system@from.owner
+				has_star_flag = wg_gateway_construction_system
+				any_system_megastructure = { has_megastructure_flag = crisis_sphere }
+				any_system_megastructure = { has_megastructure_flag = wg_fm_gateway }
+			}
+		}
+	}
+	custom_tooltip = {
+		fail_text = star_owner_is_not_hostile
+		OR = {
+			NOT = { exists = space_owner }
+			space_owner = { is_hostile = from.owner }
+			space_owner = { is_same_value = from.owner }
+		}
+	}
+	custom_tooltip = {
+		fail_text = has_our_colony
+		NOT = { solar_system = {
+			any_system_planet = {
+				exists = owner
+				owner = { is_same_value = from.owner }
+			}
+		}}
+	}
+	custom_tooltip = {
+		fail_text = is_not_star
+		is_star = yes
+	}
+	custom_tooltip = {
+		fail_text = is_black_hole
+		merg_is_forbidden_target = no
+	}
+}
+
+can_destroy_planet_with_PLANET_KILLER_WATERB = {
+	OR = {
+		hidden_trigger = {
+			AND = {
+				FROM = { has_fleet_flag = RBQ_Dragon_fleet }
+				NOT = { is_planet_class = pc_wg_water }
+			}
+		}
+		AND = {
+			custom_tooltip = {
+				fail_text = is_not_a_standard_planet_or_megastructure
+				is_a_planet_megastructure = yes
+				merg_is_forbidden_target = no
+			}
+			custom_tooltip = {
+				fail_text = is_shielded
+				NOR = {
+					is_planet_class = pc_shielded
+					is_planet_class = pc_ringworld_shielded
+					is_planet_class = pc_habitat_shielded
+					has_active_building = building_phanon_psg # AOT
+				}
+			}
+			custom_tooltip = {
+				fail_text = is_water_planet
+				NOR = {
+					is_planet_class = pc_wg_water
+					is_planet_class = pc_ringworld_habitable_water
+				}
+			}
+			OR = {
+				custom_tooltip = {
+					fail_text = is_not_hostile_or_primitive
+					OR = {
+						planet_is_hostile = yes
+						AND = {
+							exists = owner
+							owner = {
+								is_country_type = primitive
+							}
+						}
+					}		
+				}
+				custom_tooltip = {
+					text = not_barren_molten_frozen_toxic_test_fire
+					NOT = { exists = owner }
+					OR = {
+						NOT = { exists = space_owner }
+						AND = {
+							exists = space_owner
+							space_owner = { is_same_value = from.owner }
+						}
+					}
+					OR = {
+						is_habitable = yes
+						is_artificial = yes
+						is_colonizable = yes
+						merg_is_crackable_planet = yes
+					}
+				}
+			}
+		}
+	}
+}
+
+wg_event_can_destroy_planet_with_PLANET_KILLER_CRACKER = {
+	custom_tooltip = {
+		fail_text = is_not_a_standard_planet_or_megastructure
+		is_a_planet_megastructure = yes
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+	#custom_tooltip = {
+		#fail_text = is_not_hostile
+		OR = {
+			custom_tooltip = {
+				text = is_not_hostile_cracker
+				OR = {
+					AND = {
+						exists = space_owner
+						space_owner = {
+							OR = {
+								is_at_war_with = root.owner
+								is_country_type = swarm
+								is_country_type = extradimensional
+								is_country_type = extradimensional_2
+								is_country_type = extradimensional_3
+								is_country_type = ai_empire
+							}
+						}
+					}
+					AND = { # colony
+						exists = owner
+						owner = {
+							OR = {
+								is_at_war_with = root.owner
+								is_country_type = swarm
+								is_country_type = extradimensional
+								is_country_type = extradimensional_2
+								is_country_type = extradimensional_3
+								is_country_type = ai_empire
+							}
+						}
+					}
+					AND = { # primitive
+						exists = space_owner
+						exists = owner
+						owner = {
+							is_primitive = yes
+						}
+						space_owner = {
+							OR = {
+								is_at_war_with = root.owner
+								is_country_type = swarm
+								is_country_type = extradimensional
+								is_country_type = extradimensional_2
+								is_country_type = extradimensional_3
+								is_country_type = ai_empire
+							}
+						}
+					}
+				}
+			}
+			custom_tooltip = {
+				text = not_barren_molten_frozen_toxic_test_fire
+				NOT = { exists = owner }
+				OR = {
+					NOT = { exists = space_owner }
+					AND = {
+						exists = space_owner
+						space_owner = { is_same_value = root.owner }
+					}
+				}
+				OR = {
+					is_habitable = yes
+					is_artificial = yes
+					is_colonizable = yes
+					merg_is_crackable_planet = yes
+				}
+			}
+		}
+	#}
+}
+
+# Underground Realms
+can_destroy_planet_with_PLANET_KILLER_SHROUDER = {
+	custom_tooltip = {
+		fail_text = is_not_a_habitable_planet_or_megastructure
+		OR = {
+			is_a_habitable_planet_megastructure = yes
+			is_planet_class = pc_ai
+		}
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_not_hostile_or_primitive
+		OR = {
+			planet_is_hostile_or_crisis = yes
+			AND = {
+				exists = owner
+				owner = {
+					is_country_type = primitive
+				}
+			}
+		}
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+}
+
+# # The DAL Species Mod
+can_destroy_planet_with_PLANET_KILLER_EDEN = {
+	custom_tooltip = {
+		fail_text = is_not_a_habitable_planet_or_megastructure
+		is_a_habitable_planet_megastructure = yes
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+	custom_tooltip = {
+		fail_text = no_has_dal_war_in_eden
+		NOR = {
+			has_modifier = planet_dal_war_in_eden
+		}
+	}
+	custom_tooltip = {
+		#success_text = "is at war with player"
+		fail_text = is_not_hostile_or_primitive
+		OR = {
+			planet_is_hostile = yes
+			AND = {
+				exists = owner
+				owner = { is_country_type = primitive }
+			}
+			AND = {
+				exists = owner
+				owner = { is_same_value = from.owner }
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = owner
+			owner = { is_country_type = primitive }
+		}
+		custom_tooltip = {
+			fail_text = primitives_not_in_borders
+			exists = space_owner
+			space_owner = { is_same_value = from.owner }
+		}
+	}
+	custom_tooltip = {
+		fail_text = no_dal_assimilatable_pops
+		any_owned_pop = {
+			NOR = {
+				has_trait = trait_DAL_spirit_1
+				has_trait = trait_DAL_spirit_2				
+			}
+		}
+	}
+}
+
+# Some Events of Outside Cluster
+can_destroy_planet_with_PLANET_KILLER_NEP_UGO = {
+	custom_tooltip = {
+		fail_text = is_not_a_habitable_planet_or_megastructure
+		is_a_habitable_planet_megastructure = yes
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+	custom_tooltip = {
+		fail_text = nep_no_sapient_pops
+		any_owned_pop = {
+			is_sapient = yes
+		}
+	}
+}
+
+# ThaumStellaris
+can_destroy_planet_with_TC_PLANET_KILLER_EXCAVATION = {
+	custom_tooltip = {
+	fail_text = "tc_planet_killer_excavation_not_target"
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			is_planet_class = pc_asteroid
+			has_active_building = building_phanon_psg # AOT
+		}
+		merg_is_forbidden_target = no
+		is_star = no
+	}
+	custom_tooltip = {
+		fail_text = "tc_planet_killer_excavation_nothing_dig"
+		NOT = {
+			is_planet_class = pc_tc_bedrock
+		}
+	}
+	custom_tooltip = {
+		fail_text = "tc_planet_killer_excavation_not_hostile"
+		OR = {
+			AND = {
+				custom_tooltip = {
+					fail_text = "tc_planet_killer_excavation_our_planet"
+					NOT = { exists = owner }
+					exists = space_owner
+					space_owner = { is_same_value = from.owner }
+				}
+			}
+			AND = {
+				custom_tooltip = {
+					text = is_not_hostile_cracker
+					OR = {
+						AND = {
+							exists = space_owner
+							space_owner = {
+								OR = {
+									is_at_war_with = from.owner
+									is_country_type = swarm
+									is_country_type = extradimensional
+									is_country_type = extradimensional_2
+									is_country_type = extradimensional_3
+									is_country_type = ai_empire
+								}
+							}
+						}
+						AND = { # colony
+							exists = owner
+							owner = {
+								OR = {
+									is_at_war_with = from.owner
+									is_country_type = swarm
+									is_country_type = extradimensional
+									is_country_type = extradimensional_2
+									is_country_type = extradimensional_3
+									is_country_type = ai_empire
+								}
+							}
+						}
+						AND = { # primitive
+							exists = space_owner
+							exists = owner
+							owner = {
+								is_primitive = yes
+							}
+							space_owner = {
+								OR = {
+									is_at_war_with = from.owner
+									is_country_type = swarm
+									is_country_type = extradimensional
+									is_country_type = extradimensional_2
+									is_country_type = extradimensional_3
+									is_country_type = ai_empire
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+can_destroy_planet_with_TC_PLANET_KILLER_EXCAVATION_TURRET = {
+	custom_tooltip = { #排除类型
+	fail_text = "tc_planet_killer_excavation_not_target"
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			is_planet_class = pc_asteroid
+			has_active_building = building_phanon_psg # AOT
+		}
+		merg_is_forbidden_target = no
+		is_star = no
+	}
+	custom_tooltip = { #已采掘星球
+		fail_text = "tc_planet_killer_excavation_nothing_dig"
+		NOT = {
+			is_planet_class = pc_tc_bedrock
+		}
+	}
+	custom_tooltip = {
+		fail_text = "tc_planet_killer_excavation_not_hostile"
+		OR = {
+			#任意己方非殖民地球
+			AND = {
+				custom_tooltip = { #所有者控制
+					fail_text = "tc_planet_killer_excavation_our_planet"
+					NOT = { exists = owner }
+					exists = space_owner
+					space_owner = { is_same_value = from.owner }
+				}
+			}
+			#敌对殖民地
+			AND = {
+				custom_tooltip = {
+					text = is_not_hostile_cracker
+					OR = {
+						AND = {
+							exists = space_owner
+							space_owner = {
+								OR = {
+									is_at_war_with = from.owner
+									is_country_type = swarm
+									is_country_type = extradimensional
+									is_country_type = extradimensional_2
+									is_country_type = extradimensional_3
+									is_country_type = ai_empire
+								}
+							}
+						}
+						AND = { # colony
+							exists = owner
+							owner = {
+								OR = {
+									is_at_war_with = from.owner
+									is_country_type = swarm
+									is_country_type = extradimensional
+									is_country_type = extradimensional_2
+									is_country_type = extradimensional_3
+									is_country_type = ai_empire
+								}
+							}
+						}
+						AND = { # primitive
+							exists = space_owner
+							exists = owner
+							owner = {
+								is_primitive = yes
+							}
+							space_owner = {
+								OR = {
+									is_at_war_with = from.owner
+									is_country_type = swarm
+									is_country_type = extradimensional
+									is_country_type = extradimensional_2
+									is_country_type = extradimensional_3
+									is_country_type = ai_empire
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+can_destroy_planet_with_TC_PLANET_KILLER_TAINTED_STORM = {
+	custom_tooltip = {
+		fail_text = is_not_a_habitable_planet_or_megastructure
+		OR = {
+			is_a_habitable_planet_megastructure = yes
+			is_planet_class = pc_ai
+		}
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_not_hostile_or_primitive
+		OR = {
+			planet_is_hostile_or_crisis = yes
+			AND = {
+				exists = owner
+				owner = {
+					is_country_type = primitive
+				}
+			}
+		}
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+}
+
+can_destroy_planet_with_TC_PLANET_KILLER_TAINTED_STORM_TURRET = {
+	custom_tooltip = {
+		fail_text = is_not_a_habitable_planet_or_megastructure
+		OR = {
+			is_a_habitable_planet_megastructure = yes
+			is_planet_class = pc_ai
+		}
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_not_hostile_or_primitive
+		OR = {
+			planet_is_hostile_or_crisis = yes
+			AND = {
+				exists = owner
+				owner = {
+					is_country_type = primitive
+				}
+			}
+		}
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+}
+
+# ACOT/AOT
+can_destroy_planet_with_ACOT_PLANET_KILLER_CRACKER = {
+	custom_tooltip = {
+		fail_text = is_not_a_standard_planet_or_megastructure
+		is_a_planet_megastructure = yes
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+	OR = {
+		custom_tooltip = {
+			text = is_not_hostile_cracker
+			OR = {
+				AND = {
+					exists = space_owner
+					space_owner = {
+						OR = {
+							is_at_war_with = from.owner
+							is_country_type = swarm
+							is_country_type = extradimensional
+							is_country_type = extradimensional_2
+							is_country_type = extradimensional_3
+							is_country_type = ai_empire
+						}
+					}
+				}
+				AND = {
+					# colony
+					exists = owner
+					owner = {
+						OR = {
+							is_at_war_with = from.owner
+							is_country_type = swarm
+							is_country_type = extradimensional
+							is_country_type = extradimensional_2
+							is_country_type = extradimensional_3
+							is_country_type = ai_empire
+						}
+					}
+				}
+				AND = {
+					# primitive
+					exists = space_owner
+					exists = owner
+					owner = {
+						is_primitive = yes
+					}
+					space_owner = {
+						OR = {
+							is_at_war_with = from.owner
+							is_country_type = swarm
+							is_country_type = extradimensional
+							is_country_type = extradimensional_2
+							is_country_type = extradimensional_3
+							is_country_type = ai_empire
+						}
+					}
+				}
+			}
+		}
+		custom_tooltip = {
+			text = not_barren_molten_frozen_toxic_test_fire
+			NOT = {
+				exists = owner
+			}
+			OR = {
+				NOT = {
+					exists = space_owner
+				}
+				AND = {
+					exists = space_owner
+					space_owner = {
+						is_same_empire = from.owner
+					}
+				}
+			}
+			OR = {
+				colonizable_planet = yes
+				merg_is_crackable_planet = yes
+			}
+		}
+	}
+}
+
+can_destroy_planet_with_ACOT_SE_PLANET_KILLER_CRACKER = {
+	custom_tooltip = {
+		fail_text = is_not_a_standard_planet_or_megastructure
+		is_a_planet_megastructure = yes
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+	OR = {
+		custom_tooltip = {
+			text = is_not_hostile_cracker
+			OR = {
+				AND = {
+					exists = space_owner
+					space_owner = {
+						OR = {
+							is_at_war_with = from.owner
+							is_country_type = swarm
+							is_country_type = extradimensional
+							is_country_type = extradimensional_2
+							is_country_type = extradimensional_3
+							is_country_type = ai_empire
+						}
+					}
+				}
+				AND = {
+					# colony
+					exists = owner
+					owner = {
+						OR = {
+							is_at_war_with = from.owner
+							is_country_type = swarm
+							is_country_type = extradimensional
+							is_country_type = extradimensional_2
+							is_country_type = extradimensional_3
+							is_country_type = ai_empire
+						}
+					}
+				}
+				AND = {
+					# primitive
+					exists = space_owner
+					exists = owner
+					owner = {
+						is_primitive = yes
+					}
+					space_owner = {
+						OR = {
+							is_at_war_with = from.owner
+							is_country_type = swarm
+							is_country_type = extradimensional
+							is_country_type = extradimensional_2
+							is_country_type = extradimensional_3
+							is_country_type = ai_empire
+						}
+					}
+				}
+			}
+		}
+		custom_tooltip = {
+			text = not_barren_molten_frozen_toxic_test_fire
+			NOT = {
+				exists = owner
+			}
+			OR = {
+				NOT = {
+					exists = space_owner
+				}
+				AND = {
+					exists = space_owner
+					space_owner = {
+						is_same_empire = from.owner
+					}
+				}
+			}
+			OR = {
+				# Rewriting this part for max compatibility, inspired by Planetary Diversity
+				colonizable_planet = yes
+				merg_is_crackable_planet = yes
+			}
+		}
+	}
+}
+
+can_destroy_planet_with_ACOT_HE_PLANET_KILLER_CRACKER = {
+	custom_tooltip = {
+		fail_text = is_not_a_standard_planet_or_megastructure
+		is_a_planet_megastructure = yes
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+	OR = {
+		custom_tooltip = {
+			text = is_not_hostile_cracker
+			OR = {
+				AND = {
+					exists = space_owner
+					space_owner = {
+						OR = {
+							is_at_war_with = from.owner
+							is_country_type = swarm
+							is_country_type = extradimensional
+							is_country_type = extradimensional_2
+							is_country_type = extradimensional_3
+							is_country_type = ai_empire
+						}
+					}
+				}
+				AND = {
+					# colony
+					exists = owner
+					owner = {
+						OR = {
+							is_at_war_with = from.owner
+							is_country_type = swarm
+							is_country_type = extradimensional
+							is_country_type = extradimensional_2
+							is_country_type = extradimensional_3
+							is_country_type = ai_empire
+						}
+					}
+				}
+				AND = {
+					# primitive
+					exists = space_owner
+					exists = owner
+					owner = {
+						is_primitive = yes
+					}
+					space_owner = {
+						OR = {
+							is_at_war_with = from.owner
+							is_country_type = swarm
+							is_country_type = extradimensional
+							is_country_type = extradimensional_2
+							is_country_type = extradimensional_3
+							is_country_type = ai_empire
+						}
+					}
+				}
+			}
+		}
+		custom_tooltip = {
+			text = not_barren_molten_frozen_toxic_test_fire
+			NOT = {
+				exists = owner
+			}
+			OR = {
+				NOT = {
+					exists = space_owner
+				}
+				AND = {
+					exists = space_owner
+					space_owner = {
+						is_same_empire = from.owner
+					}
+				}
+			}
+			OR = {
+				# Rewriting this part for max compatibility, inspired by Planetary Diversity
+				colonizable_planet = yes
+				merg_is_crackable_planet = yes
+			}
+		}
+	}
+}
+
+# Arknights Near Future
+can_destroy_planet_with_PLANET_KILLER_ARK_FROSTNOVA = {
+	custom_tooltip = {
+		fail_text = is_not_a_habitable_planet_or_megastructure
+		is_a_habitable_planet_megastructure = yes
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+	custom_tooltip = {
+		fail_text = is_not_hostile_or_primitive
+		OR = {
+			AND = { # primitive
+				exists = owner
+				owner = {
+					is_primitive = yes
+				}
+			}
+
+			has_owner = no
+
+			AND = {
+				exists = space_owner
+				space_owner = {
+					OR = {
+						is_at_war_with = from.owner
+						is_country_type = swarm
+						is_country_type = extradimensional
+						is_country_type = extradimensional_2
+						is_country_type = extradimensional_3
+					}
+				}
+			}
+		}
+	}
+	custom_tooltip = {
+		fail_text = ark_is_ai_planet
+		NOR = {
+			is_planet_class = pc_ai
+			is_planet_class = pc_machine
+		}
+	}
+}
+
+# Nanite Machines & Distant Stars Overhaul
+can_destroy_planet_with_PLANET_KILLER_HARVESTER = {
+	custom_tooltip = {
+		fail_text = is_not_a_standard_planet_or_megastructure
+		is_a_planet_megastructure = yes
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+	#custom_tooltip = {
+		#fail_text = is_not_hostile
+		OR = {
+			custom_tooltip = {
+				text = is_not_hostile_cracker
+				OR = {
+					AND = {
+						exists = space_owner
+						space_owner = {
+							OR = {
+								is_at_war_with = from.owner
+								is_country_type = swarm
+								is_country_type = extradimensional
+								is_country_type = extradimensional_2
+								is_country_type = extradimensional_3
+								is_country_type = ai_empire
+							}
+						}
+					}
+					AND = { # colony
+						exists = owner
+						owner = {
+							OR = {
+								is_at_war_with = from.owner
+								is_country_type = swarm
+								is_country_type = extradimensional
+								is_country_type = extradimensional_2
+								is_country_type = extradimensional_3
+								is_country_type = ai_empire
+							}
+						}
+					}
+					AND = { # primitive
+						exists = space_owner
+						exists = owner
+						owner = {
+							is_primitive = yes
+						}
+						space_owner = {
+							OR = {
+								is_at_war_with = from.owner
+								is_country_type = swarm
+								is_country_type = extradimensional
+								is_country_type = extradimensional_2
+								is_country_type = extradimensional_3
+								is_country_type = ai_empire
+							}
+						}
+					}
+				}
+			}
+			custom_tooltip = {
+				text = not_barren_molten_frozen_toxic_test_fire
+				NOT = { exists = owner }
+				OR = {
+					NOT = { exists = space_owner }
+					AND = {
+						exists = space_owner
+						is_owned_by = from.owner
+					}
+				}
+				OR = {
+					# Rewriting this part for max compatibility, inspired by Planetary Diversity
+					colonizable_planet = yes
+					merg_is_crackable_planet = yes
+				}
+			}
+		}
+	#}
+}
+
+# Empires Expanded
+can_destroy_planet_with_PLANET_KILLER_CORRUPT = {
+	custom_tooltip = {
+		fail_text = is_not_a_standard_planet_or_megastructure
+		is_a_planet_megastructure = yes
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			NOT = { has_active_building = building_phanon_psg } # AOT
+		}
+	}
+	custom_tooltip = {
+		fail_text = is_already_corrupt
+		NOT = { is_planet_class = pc_corrupted }
+	}
+		OR = {
+			custom_tooltip = {
+				text = is_not_hostile_cracker
+				OR = {
+					AND = {
+						exists = space_owner
+						space_owner = {
+							OR = {
+								is_at_war_with = from.owner
+								is_country_type = swarm
+								is_country_type = extradimensional
+								is_country_type = extradimensional_2
+								is_country_type = extradimensional_3
+								is_country_type = ai_empire
+								is_country_type = master_ai_country #based
+							}
+						}
+					}
+					AND = { # colony
+						exists = owner
+						owner = {
+							OR = {
+								is_at_war_with = from.owner
+								is_country_type = swarm
+								is_country_type = extradimensional
+								is_country_type = extradimensional_2
+								is_country_type = extradimensional_3
+								is_country_type = ai_empire
+								is_country_type = primitive
+								is_country_type = master_ai_country #based
+							}
+						}
+					}
+					AND = { # primitive
+						exists = space_owner
+						exists = owner
+						owner = {
+							is_primitive = yes
+						}
+						space_owner = {
+							OR = {
+								is_at_war_with = from.owner
+								is_country_type = swarm
+								is_country_type = extradimensional
+								is_country_type = extradimensional_2
+								is_country_type = extradimensional_3
+								is_country_type = ai_empire
+								is_country_type = master_ai_country #based
+							}
+						}
+					}
+				}
+			}
+		custom_tooltip = {
+			fail_text = is_not_hostile
+			OR = {
+				planet_is_hostile_or_crisis = yes
+				AND = {
+					exists = owner
+					owner = { is_at_war_with = from.owner }
+				}
+			}
+		}
+	}
+}
+
+# Cryogenesis Unofficial Species Pack
+can_destroy_planet_with_PLANET_KILLER_SM_CRYORAY = {
+	custom_tooltip = {
+		fail_text = is_habitable_non_artificial
+		OR = {
+			is_colonizable = yes
+			is_colony = yes
+		}
+		is_artificial = no
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		NOT = { is_planet_class = pc_sm_cryoworld }
+	}
+	if = {
+		limit = { is_inside_border = from.owner }
+		if = {
+			limit = { #Uninhabited and primitive planets are always fine, if own colony then check if pops would be purged
+				exists = owner
+				owner = { is_same_value = from.owner }
+				any_owned_species = {
+					NOR = { 
+						has_trait = trait_sm_cryogenesis_machine
+						has_trait =	trait_pc_sm_cryoworld_preference
+					}
+				}
+			}
+			custom_tooltip = {
+				fail_text = requires_purge_allowed_cryo
+				success_text = will_purge_non_cryo_pops
+				from.owner = {
+					is_ai = no
+					has_policy_flag = purge_allowed
+				}
+			}
+		}
+	}
+	else = {
+		custom_tooltip = {
+			fail_text = is_not_hostile_or_primitive_or_ours
+			OR = {
+				planet_is_hostile = yes
+				AND = {
+					exists = owner
+					owner = {
+						is_country_type = primitive
+					}
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = owner
+			owner = { is_country_type = primitive }
+		}
+		custom_tooltip = {
+			fail_text = primitives_not_in_borders
+			exists = space_owner
+			space_owner = { is_same_value = from.owner }
+		}
+		custom_tooltip = {
+			fail_text = primitives_not_full_interference
+			from.owner = {
+				has_policy_flag = interference_full
+			}
+		}
+	}
+}
+
+# Kancolle
+can_destroy_planet_with_planet_killer_kancolle_kari = {
+	custom_tooltip = {
+		fail_text = is_not_a_standard_planet_or_megastructure
+		is_a_planet_megastructure = yes
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_shielded
+		NOR = {
+			is_planet_class = pc_shielded
+			is_planet_class = pc_ringworld_shielded
+			is_planet_class = pc_habitat_shielded
+			has_active_building = building_phanon_psg # AOT
+		}
+	}
+	#custom_tooltip = {
+		#fail_text = is_not_hostile
+		OR = {
+			custom_tooltip = {
+				text = is_not_hostile_cracker
+				OR = {
+					AND = {
+						exists = space_owner
+						space_owner = {
+							OR = {
+								is_at_war_with = from.owner
+								is_country_type = swarm
+								is_country_type = extradimensional
+								is_country_type = extradimensional_2
+								is_country_type = extradimensional_3
+								is_country_type = ai_empire
+							}
+						}
+					}
+					AND = { # colony
+						exists = owner
+						owner = {
+							OR = {
+								is_at_war_with = from.owner
+								is_country_type = swarm
+								is_country_type = extradimensional
+								is_country_type = extradimensional_2
+								is_country_type = extradimensional_3
+								is_country_type = ai_empire
+							}
+						}
+					}
+					AND = { # primitive
+						exists = space_owner
+						exists = owner
+						owner = {
+							is_primitive = yes
+						}
+						space_owner = {
+							OR = {
+								is_at_war_with = from.owner
+								is_country_type = swarm
+								is_country_type = extradimensional
+								is_country_type = extradimensional_2
+								is_country_type = extradimensional_3
+								is_country_type = ai_empire
+							}
+						}
+					}
+				}
+			}
+			custom_tooltip = {
+				text = not_barren_molten_frozen_toxic_test_fire
+				NOT = { exists = owner }
+				OR = {
+					NOT = { exists = space_owner }
+					AND = {
+						exists = space_owner
+						space_owner = { is_same_value = from.owner }
+					}
+				}
+				OR = {
+					# Rewriting this part for max compatibility, inspired by Planetary Diversity
+					colonizable_planet = yes
+					is_artificial = yes
+					merg_is_crackable_planet = yes
+				}
+			}
+		}
+	#}
+}
+
+can_destroy_planet_with_planet_killer_kancolle_water_world = {
+	custom_tooltip = {
+		fail_text = is_habitable_non_artificial
+		OR = {
+			is_colonizable = yes
+			is_colony = yes
+		}
+		is_artificial = no
+		merg_is_forbidden_target = no
+	}
+	custom_tooltip = {
+		fail_text = is_not_oceanic
+		NOT = { is_planet_class = pc_ocean }
+	}
+	if = {
+		limit = { is_inside_border = from.owner }
+		if = {
+			limit = { #Uninhabited and primitive planets are always fine, if own colony then check if pops would be purged
+				exists = owner
+				owner = { is_same_value = from.owner }
+				any_owned_species = {
+					NOT = { has_trait = trait_aquatic }
+				}
+			}
+			custom_tooltip = {
+				fail_text = requires_purge_allowed
+				success_text = will_purge_non_aquatic_pops
+				from.owner = {
+					is_ai = no
+					has_policy_flag = purge_allowed
+				}
+			}
+		}
+	}
+	else = {
+		custom_tooltip = {
+			fail_text = is_not_hostile_or_primitive_or_ours
+			OR = {
+				planet_is_hostile_or_crisis = yes
+				AND = {
+					exists = owner
+					owner = {
+						is_country_type = primitive
+					}
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = owner
+			owner = { is_country_type = primitive }
+		}
+		custom_tooltip = {
+			fail_text = primitives_not_in_borders
+			exists = space_owner
+			space_owner = { is_same_value = from.owner }
+		}
+		custom_tooltip = {
+			fail_text = primitives_not_full_interference
+			from.owner = {
+				has_policy_flag = interference_full
+			}
+		}
+	}
+}
+
+# Vanilla triggers
+is_a_planet = {
+	is_star = no
+	NOR = {
+		is_planet_class = pc_gas_giant
+		is_planet_class = pc_asteroid
+		is_planet_class = pc_habitat
+		is_planet_class = pc_shrouded
+		is_planet_class = pc_ringworld_habitable
+		is_planet_class = pc_ringworld_habitable_damaged
+		# Plentiful Traditions
+		is_planet_class = pc_habitat_robot
+	}
+}
+
+can_destroy_planet_general = {
+	is_star = no
+	merg_is_forbidden_target = no
+	OR = {
+		NOT = { exists = owner }
+		owner = { is_hostile = from.owner }
+	}
+}
+
+# Merger of Rules
+# List of uninhabitable planets for the planet cracker's test fire.
+merg_is_crackable_planet = {
+	OR = {
+		uninhabitable_regular_planet = yes
+		# Planetary Diversity
+		is_planet_class = pc_acid
+		is_planet_class = pc_ammonia
+		is_planet_class = pc_ash
+		is_planet_class = pc_carbon
+		is_planet_class = pc_chthonian
+		is_planet_class = pc_crystal
+		is_planet_class = pc_diamond
+		is_planet_class = pc_ethane_ocean
+		is_planet_class = pc_floating
+		is_planet_class = pc_graveyard
+		is_planet_class = pc_hydrocarbon
+		is_planet_class = pc_iron
+		is_planet_class = pc_irradiated
+		is_planet_class = pc_methane
+		is_planet_class = pc_subglacial
+		is_planet_class = pc_sulfur
+		is_planet_class = pc_technoorganic
+		is_planet_class = pc_volcanic
+		# Gigastructural Engineering & More
+		is_planet_class = pc_red_toxic
+	}
+}
+
+# Used by Planet Killers to forbid them to destroy invalid targets
+merg_is_forbidden_target = {
+	OR = {
+		# Merger of Rules
+		has_planet_flag = merg_forbidden_target # add this to your planet to dynamically exclude it.
+		merg_is_dense_star = yes
+		merg_is_empty_space = yes
+		# MEM
+		is_planet_class = pc_mem_synthetic_sun
+		# APSR
+		is_planet_class = pc_apsr_ancient
+		is_planet_class = pc_apsr_unique
+		# ACOT
+		is_planet_class = pc_acot_enigmopolis
+	}
+}
+
+# List of dense stars for planet killers
+merg_is_dense_star = {
+	OR = {
+		is_planet_class = pc_black_hole
+		is_planet_class = pc_neutron_star
+		is_planet_class = pc_pulsar
+		# Gigastructural Engineering & More
+		is_planet_class = pc_birch
+		is_planet_class = pc_core_black_hole
+		is_planet_class = pc_core_quasar
+		is_planet_class = pc_black_hole_giga
+		is_planet_class = pc_ehof_black_hole
+		is_planet_class = pc_pouchkinn_black_hole
+		is_planet_class = pc_whc_star
+		is_planet_class = pc_wh_star
+		is_planet_class = pc_whdyson_star
+		# Hypothetical Stars
+		is_planet_class = pc_white_hole
+		is_planet_class = pc_strange_star
+		# Real Space
+		is_planet_class = pc_collapsar
+		is_planet_class = pc_magnetar
+		is_planet_class = pc_microquasar_1
+		is_planet_class = pc_microquasar_2
+		# MEM
+		is_planet_class = pc_mem_micro_black_hole
+	}
+}
+
+# List of void stars and planet for planet killers
+merg_is_empty_space = {
+	OR = {
+		# Gigastructural Engineering & More
+		is_planet_class = giga_hidden
+		# Ancient Empires
+		is_planet_class = pc_ag_void_star
+		is_planet_class = pc_ag_void_planet
+		# ACOT
+		is_planet_class = pc_invisible_star
+		# History of the Lost Empire
+		is_planet_class = pc_empty_space
+		# Some Events of Outside Cluster
+		is_planet_class = pc_star_void_dummy_01
+		# ThaumStellaris
+		is_planet_class = pc_tc_not_texture
+	}
+}

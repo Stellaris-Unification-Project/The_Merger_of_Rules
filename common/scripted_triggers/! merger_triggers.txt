@@ -1,0 +1,217 @@
+# Merger of Rules scripted triggers
+# These triggers are also meant as a library for modders who want to reuse them in their own mods.
+
+merg_is_standard_empire = {
+	OR = {
+		is_country_type = default
+		is_country_type = fallen_empire
+		is_country_type = awakened_fallen_empire
+		# ZOFE
+		is_country_type = ascended_empire
+		is_country_type = lost_empire
+		# The Empty Vagrant
+		is_country_type = default_ev
+		is_country_type = fallen_empire_ev
+		is_country_type = awakened_fallen_empire_ev
+		# Human Fallen Empire
+		is_country_type = human_fallen_empire
+		is_country_type = hfe_pirate
+	}
+}
+
+# Expanded version of country_type = default
+merg_is_default_empire = {
+	OR = {
+		is_country_type = default
+		# ZOFE
+		is_country_type = ascended_empire
+		is_country_type = lost_empire
+		# The Empty Vagrant
+		is_country_type = default_ev
+	}
+}
+
+# List of dormant/standard Fallen Empires
+merg_is_fallen_empire = {
+	OR = {
+		is_country_type = fallen_empire
+		# ZOFE
+		is_country_type = lost_empire
+		# The Empty Vagrant
+		is_country_type = fallen_empire_ev
+		# SW:KUAT ANCIENT EMPIRE
+		is_country_type = kuat_fallen_empire
+		# Human Fallen Empire
+		AND = {
+			is_country_type = human_fallen_empire
+			NOT = { has_civic = hfe_civic_egypt_fury }
+		}
+	}
+}
+
+# List of awakened Fallen Empires
+merg_is_awakened_fe = {
+	OR = {
+		is_country_type = awakened_fallen_empire
+		# SW:KUAT ANCIENT EMPIRE
+		is_country_type = kuat_awakened_fallen_empire
+		is_country_type = awakened_return_kuat_empire
+		# A Deadly Tempest
+		is_country_type = awakened_gate_builders
+		# ZOFE
+		is_country_type = ascended_empire
+		# The Empty Vagrant
+		is_country_type = awakened_fallen_empire_ev
+		# Human Fallen Empire
+		AND = {
+			is_country_type = human_fallen_empire
+			has_civic = hfe_civic_egypt_fury
+		}
+	}
+}
+
+# List of all habitable ringworld sections
+merg_is_hab_ringworld = {
+	OR = {
+		is_planet_class = pc_ringworld_habitable
+		is_planet_class = pc_shattered_ring_habitable
+		# Gigastructural Engineering & More
+		is_planet_class = pc_gigaorbital_ring
+		is_planet_class = pc_interstellar_ringworld_habitable
+		is_planet_class = pc_ringworld_city
+		is_planet_class = pc_squareworld_habitable
+		is_planet_class = pc_giga_penrose_habitable
+		is_planet_class = pc_ringworld_machine
+		is_planet_class = pc_ringworld_hive
+		# Ancient Empire
+		# listed planet types are for colors only, they're all ideal
+		is_planet_class = pc_ag_ringworld_desert
+		is_planet_class = pc_ag_ringworld_arid
+		is_planet_class = pc_ag_ringworld_savannah
+		is_planet_class = pc_ag_ringworld_ocean
+		is_planet_class = pc_ag_ringworld_continental
+		is_planet_class = pc_ag_ringworld_tropical
+		is_planet_class = pc_ag_ringworld_tundra
+		is_planet_class = pc_ag_ringworld_arctic
+		is_planet_class = pc_ag_ringworld_alpine
+		is_planet_class = pc_ag_ringworld_machine
+		is_planet_class = pc_ag_ringworld_city
+		is_planet_class = pc_ag_ringworld_gaia
+		# Warship Girls and MIST species
+		is_planet_class = pc_ringworld_habitable_sh
+		is_planet_class = pc_ringworld_habitable_wsg
+	}
+}
+
+merg_has_cloning_building = {
+	OR = {
+		# Vanilla
+		has_building = building_clone_vats
+		# ANZ Advanced Cloning
+		has_building = building_clone_vats_basic_organic
+		has_building = building_clone_vats_improved_organic
+		has_building = building_clone_vats_advanced_organic
+		has_building = building_clone_vats_augmented_organic
+		has_building = building_clone_vats_basic_asim
+		has_building = building_clone_vats_improved_asim
+		has_building = building_clone_vats_advanced_asim
+		has_building = building_clone_vats_augmented_asim
+		has_building = building_clone_vats_basic_serv
+		has_building = building_clone_vats_improved_serv
+		has_building = building_clone_vats_advanced_serv
+		has_building = building_clone_vats_augmented_serv
+		# Ethics and Civics Bug Branch
+		has_building = building_evolution_monastery
+		has_building = building_evolution_monastery_two
+		# ACOT
+		has_building = building_fe_clone_vats
+		has_building = building_ae_clone_vats
+		# AOT
+		has_building = building_stellarite_clone_vats
+		has_building = building_phanon_clone_vats
+		# The Dark Arts of Necromancy
+		has_building = building_house_of_the_fleshsculpter
+		has_building = building_summoner_site
+	}
+}
+
+# Listing habitats
+merg_is_habitat = {
+	OR = {
+		is_planet_class = pc_habitat
+		# Planetary Diversity
+		uses_district_set = pdplanethab
+		# Gigastructural Engineering & More
+		is_planet_class = pc_interstellar_habitat
+		# More Events Mod
+		is_planet_class = pc_mem_vazuran_habitat
+		# Acquisition of Technology
+		uses_district_set = dm_habitat
+		uses_district_set = ae_habitat
+		uses_district_set = sigma_habitat
+		# Starborn: Improved Voidtouched
+		uses_district_set = starborn_start
+		# Twinks Atlantean
+		uses_district_set = skypalace
+		# Plentiful Traditions
+		is_planet_class = pc_habitat_robot
+	}
+}
+
+# Planet is doomed, check for resettle rules
+merg_is_doomed_planet = {
+	OR = {
+		has_modifier = doomsday_1
+		has_modifier = doomsday_2
+		has_modifier = doomsday_3
+		has_modifier = doomsday_4
+		has_modifier = doomsday_5
+		# Expanded Events
+		has_modifier = deteriorating_ecosystem
+		has_modifier = catastrophe_approach
+		has_modifier = apocalypse
+		has_modifier = ravenous_locusts
+		has_modifier = planet_active_worm
+		# Endless Frontier: An Event Mod
+		has_modifier = mzilli_events_dying_world
+	}
+}
+
+# Ethics & Civics stuff for compatibility
+is_socialism = {
+	OR = {
+		has_ethic = ethic_fanatic_socialism
+		has_ethic = ethic_socialism
+	}
+}
+
+is_capitalism = {
+	OR = {
+		has_ethic = ethic_fanatic_capitalism
+		has_ethic = ethic_capitalism
+	}
+}
+
+is_green = {
+ 	OR = {
+ 		has_ethic = ethic_fanatic_green
+ 		has_ethic = ethic_green
+ 	}
+}
+
+# List of void systems
+merg_is_void_system = {
+	OR = {
+		# Ancient Empire
+		is_star_class = pc_ag_void_star
+		# Wild Space
+		is_star_class = sc_dn
+		# ACOT
+		is_star_class = sofe_outer_class
+		is_star_class = sofe_inner_class
+		# History of the Lost Empire
+		is_star_class = sc_empty_space
+		# Some Events of Outside Cluster
+		is_star_class = sc_void_dummy
+	}
+}

@@ -1,0 +1,576 @@
+# Vanilla scripted triggers
+
+# Expanded by me for more cross-mod comp and to ease the game rules coding.
+is_megacorp = {
+	OR = {
+		has_authority = auth_corporate
+		has_valid_civic = civic_galactic_sovereign_megacorp
+		# Warship Girls R And MIST Species
+		has_authority = auth_warshipgirls
+		# Stellaris Evolved
+		has_authority = auth_tec_patrocorporate
+		# More Authorities
+		has_authority = auth_corporate_imperial # Also in E&C Bug Branch
+		# Ethics and Civics - Bug Branch
+		has_authority = auth_corporate_democratic
+		# Expanded Traits, Civics, Pops, and More
+		has_authority = auth_private
+		has_authority = auth_cooperative # Also More Corporate Authorities
+		# Expanded Gestalts: Forgotten Queens
+		has_valid_civic = civic_mutualistic_behavior
+		# More Corporate Authorities
+		has_authority = auth_corporate_fiefdom
+	}
+}
+
+is_regular_empire = {
+	OR = {
+		is_country_type = default
+		is_country_type = fallen_empire
+		is_country_type = awakened_fallen_empire
+		# ZOFE
+		is_country_type = ascended_empire
+		is_country_type = lost_empire
+		# The Empty Vagrant
+		is_country_type = default_ev
+		is_country_type = fallen_empire_ev
+		is_country_type = awakened_fallen_empire_ev
+		# Human Fallen Empire
+		is_country_type = human_fallen_empire
+		is_country_type = hfe_pirate
+	}
+	NOT = { has_ethic = ethic_gestalt_consciousness }
+}
+
+is_fallen_empire = {
+	OR = {
+		is_country_type = fallen_empire
+		is_country_type = awakened_fallen_empire
+		# SW:KUAT ANCIENT EMPIRE
+		is_country_type = kuat_fallen_empire
+		is_country_type = kuat_awakened_fallen_empire
+		is_country_type = awakened_return_kuat_empire
+		# A Deadly Tempest
+		is_country_type = awakened_gate_builders
+		# Human Fallen Empire
+		is_country_type = human_fallen_empire
+	}
+}
+
+colonizable_planet = {
+	OR = {
+		is_planet_class = pc_city
+		is_planet_class = pc_relic
+		is_planet_class = pc_nuked
+		is_planet_class = pc_hive
+		is_planet_class = pc_machine
+		habitable_structure = yes
+		habitable_planet = yes
+		is_artificial = yes
+		# Planetary Diversity
+		is_planet_class = pc_pdshroud
+		is_planet_class = pc_irradiated
+		# Gigastructures
+		is_planet_class = pc_katzenland
+		# SW:UnknownWorld Shipgirls Story
+		is_planet_class = pc_swgs_engineer
+		is_planet_class = pc_swgs_engineer_ringworld_habitable
+		# Warship Girls R And MIST Species
+		is_planet_class = pc_wsg_port
+		is_planet_class = pc_shenhai
+		# APSR: Anomalies, Planetary and Space Resources
+		AND = {
+			has_apsr = yes
+			has_apsr_modifiers = yes
+		}
+		# Endless Frontier
+		is_planet_class = pc_mzilli_shadow
+	}
+}
+
+#FOR CUSTODIAN
+is_crisis_faction = {
+	OR = {
+		is_country_type = swarm
+		is_country_type = extradimensional
+		is_country_type = extradimensional_2
+		is_country_type = extradimensional_3
+		is_country_type = ai_empire
+		is_country_type = gray_goo
+		is_country_type = awakened_marauders
+		# Gigastructural Engineering & More
+		is_country_type = katzenartig_imperium
+		is_country_type = dormant_aeternum
+		# ACOT
+	    is_country_type = original_empire
+		# Solar Storm
+		is_country_type = abyssal_host_invaders_type
+		# Shroud Rising
+		is_country_type = shroud_cult
+		is_country_type = shroud_entities
+		is_country_type = shroud_horrors
+	}
+}
+
+has_encountered_other_species = {
+	OR = {
+		has_origin = origin_syncretic_evolution
+		has_origin = origin_necrophage
+		has_valid_civic = civic_machine_servitor
+		# Ethics and Civics Classic and all its variants
+		has_valid_civic = civic_symbiotic_race
+		has_valid_civic = civic_slave_race
+		# Ethics & Civics: Bug Branch
+		has_valid_civic = civic_evolutionary_architects
+		has_valid_civic = civic_slave_race_corpo
+		has_valid_civic = civic_evolutionary_architects_corpo
+		# Vanilla
+		num_communications > 0
+		any_owned_pop = {
+			NOR = {
+				has_trait = "trait_mechanical"
+				is_same_species = prev
+			}
+		}
+	}
+}
+
+is_organic_species = {
+	species = {
+		OR = {
+			is_archetype = BIOLOGICAL # original trigger did not include pre-sapient classes
+			is_archetype = LITHOID
+			# Warship Girls R And MIST Species
+			is_archetype = WARSHIPGIRL
+			is_archetype = SHENHAI
+			# SW:UnknownWorld Shipgirls Story
+			is_archetype = STARSHIPGIRLS
+			# Kancolle
+			is_archetype = KANMUSU
+			# Azur Lane Stellaris DLC
+			is_archetype = KANSEN
+			# Empire of Eeveelution
+			is_archetype = POKEMON
+			# AshArms Aquarius history
+			is_archetype = Dolls
+			# Expanded Traits, Civics, Pops, and More
+			is_archetype = HUMANOID
+			is_archetype = MAMMALIAN
+			is_archetype = REPTILIAN
+			is_archetype = AVIAN
+			is_archetype = ARTHROPOID
+			is_archetype = MOLUSCOID
+			is_archetype = FUNGOID
+			is_archetype = PLANTOID
+			is_archetype = NECROID
+			is_archetype = half_species
+			is_archetype = half_species_special
+			is_archetype = half_aberration
+			is_archetype = half_perfect
+			is_archetype = half_amalgamated
+			# Aquatic Portraits mod
+			is_archetype = JAYPEES_AQUATIC
+			is_archetype = JAYPEES_BRAIN
+			is_archetype = JAYPEES_CRAB
+			is_archetype = JAYPEES_DOLPHIN
+			is_archetype = JAYPEES_DUMBO
+			is_archetype = JAYPEES_ELESQUID
+			is_archetype = JAYPEES_FISH
+			is_archetype = JAYPEES_HAIRTENTACLE
+			is_archetype = JAYPEES_SEAL
+			is_archetype = JAYPEES_SQUID
+			is_archetype = JAYPEES_TURTLEHORSE
+			# The DAL Species Mod
+			is_archetype = DATEALIVE
+			# Nyto Species Events Pack
+			is_archetype = NYTO
+			# Silfae's Portrait Revisited
+            AND = {
+                is_archetype = HOLOARCH
+                NOR = {
+                    has_trait = trait_holofrixigram
+                    has_trait = trait_holofrixigram_2
+                    has_trait = trait_holofrixigram_3
+                }
+            }
+			# Cryogenesis Unofficial Species Pack
+			is_archetype = sm_ELEMENTAL
+		}
+	}
+}
+
+habitable_planet = {
+	OR = {
+		is_planet_class = pc_desert
+		is_planet_class = pc_tropical
+		is_planet_class = pc_arid
+		is_planet_class = pc_continental
+		is_planet_class = pc_ocean
+		is_planet_class = pc_tundra
+		is_planet_class = pc_arctic
+		is_planet_class = pc_alpine
+		is_planet_class = pc_savannah
+		is_planet_class = pc_gaia
+		is_planet_class = pc_relic
+		is_planet_class = pc_city
+		is_planet_class = pc_hive
+		# Planetary Diversity
+		is_planet_class = pc_pdshroud
+		is_planet_class = pc_cascadian
+		is_planet_class = pc_desertislands
+		is_planet_class = pc_subarctic
+		is_planet_class = pc_mangrove
+		is_planet_class = pc_wetswamp
+		is_planet_class = pc_fog
+		is_planet_class = pc_hajungle
+		is_planet_class = pc_cenote
+		is_planet_class = pc_biolumen
+		is_planet_class = pc_steppe
+		is_planet_class = pc_sandsea
+		is_planet_class = pc_oasis
+		is_planet_class = pc_mesa
+		is_planet_class = pc_badlands
+		is_planet_class = pc_outback
+		is_planet_class = pc_coastal
+		is_planet_class = pc_swamp
+		is_planet_class = pc_mud
+		is_planet_class = pc_basalt
+		is_planet_class = pc_frozen_desert
+		is_planet_class = pc_glacial
+		is_planet_class = pc_hadesert
+		is_planet_class = pc_prairie
+		is_planet_class = pc_veld
+		is_planet_class = pc_semiarid
+		is_planet_class = pc_med
+		is_planet_class = pc_boreal
+		is_planet_class = pc_mushroom
+		is_planet_class = pc_ammonia
+		is_planet_class = pc_sulfur
+		is_planet_class = pc_acid
+		is_planet_class = pc_methane
+		is_planet_class = pc_geothermal
+		is_planet_class = pc_superhabitable
+		is_planet_class = pc_tidallylocked
+		is_planet_class = pc_supercon
+		is_planet_class = pc_floating
+		is_planet_class = pc_crucible
+		is_planet_class = pc_shroud_crucible
+		is_planet_class = pc_clean_crucible
+		is_planet_class = pc_crystal
+		is_planet_class = pc_technoorganic
+		is_planet_class = pc_graveyard
+		is_planet_class = pc_antarctic
+		is_planet_class = pc_aeolian
+		is_planet_class = pc_snow
+		is_planet_class = pc_highland
+		is_planet_class = pc_duneforest
+		is_planet_class = pc_retinal
+		is_planet_class = pc_forest
+		is_planet_class = pc_lake
+		is_planet_class = pc_tepid
+		is_planet_class = pc_irradiated
+		is_planet_class = pc_karst
+		is_planet_class = pc_reef
+		is_planet_class = pc_ash
+		is_planet_class = pc_primal
+		is_planet_class = pc_aquatic
+		is_planet_class = pc_aquatic_uw
+		is_planet_class = pc_salt
+		is_planet_class = pc_aquifer
+		is_planet_class = pc_coral
+		is_planet_class = pc_storm
+		is_planet_class = pc_rogue
+		is_planet_class = pc_lichen
+		is_planet_class = pc_eyeball
+		is_planet_class = pc_glacio
+		is_planet_class = pc_lanthanide
+		is_planet_class = pc_megaflora
+		is_planet_class = pc_megaflorahive
+		is_planet_class = pc_megafloratol
+		is_planet_class = pc_pdhive1
+		is_planet_class = pc_pdhive2
+		is_planet_class = pc_bioforge
+		is_planet_class = pc_biocapital
+		is_planet_class = pc_biofort
+		is_planet_class = pc_tidallygaia
+		is_planet_class = pc_tidallyaquatic
+		# Warship Girls R And MIST Species
+		is_planet_class = pc_wsg_port
+		is_planet_class = pc_shenhai
+		# SW: UnknownWorld Shipgirls Story
+		is_planet_class = pc_swgs_engineer
+		is_planet_class = pc_swgs_engineer_ringworld_habitable
+		# Gigastructures
+		is_planet_class = pc_ll_temperate
+		is_planet_class = pc_ll_foggy
+		is_planet_class = pc_ll_torrid
+		# Real Space - New Frontiers / Expanded Gestalts: Forgotten Queens
+		is_planet_class = pc_hollow
+		# Giga Diversity
+		is_planet_class = pc_ll_methane
+		is_planet_class = pc_ll_ash
+		is_planet_class = pc_ll_sulfur
+		is_planet_class = pc_ll_ammonia
+		is_planet_class = pc_ll_ocean
+		is_planet_class = pc_ll_tidallylocked_cold
+		is_planet_class = pc_ll_tidallylocked
+		is_planet_class = pc_ll_rogue
+	}
+}
+
+uninhabitable_regular_planet = {
+	OR = {
+		is_planet_class = pc_molten
+		is_planet_class = pc_barren
+		is_planet_class = pc_barren_cold
+		is_planet_class = pc_toxic
+		is_planet_class = pc_frozen
+		# Planetary Diversity
+		is_planet_class = pc_hothouse
+	}
+}
+
+is_a_habitable_planet_megastructure = {
+	OR = {
+		is_planet_class = pc_infested
+		is_planet_class = pc_matryoshka # Expanded Gestalts: Forgotten Queens
+		colonizable_planet = yes # Ariphaos patch
+		habitable_structure = yes
+	}
+}
+
+# Enforcing proper use of this trigger. You don't need to overwrite it since 3.0!
+habitable_structure = {
+	is_artificial = yes
+	OR = {
+		is_colony = yes
+		is_colonizable = yes
+	}
+}
+
+is_country_type_with_subjects = {
+	OR = {
+		is_country_type = default
+		is_country_type = awakened_fallen_empire
+		# ZOFE
+		is_country_type = ascended_empire
+		is_country_type = lost_empire
+		# The Empty Vagrant
+		is_country_type = default_ev
+		# ACOT
+		is_country_type = original_empire
+		is_country_type = original_empire_passive
+		is_country_type = original_empire_active
+	}
+}
+
+has_comms_with_alien_empire = {
+	any_relation = {	
+		has_communications = root
+		OR = {
+			merg_is_default_empire = yes
+			is_country_type = fallen_empire
+			is_country_type = awakened_fallen_empire
+			# ACOT
+			is_country_type = original_empire
+			is_country_type = original_empire_passive
+			is_country_type = original_empire_active
+			is_country_type = sofe_light_seeker
+		}
+	}
+}
+
+has_comms_with_alien_civilization = {
+	any_relation = {	
+		has_communications = root
+		OR = {
+			merg_is_default_empire = yes
+			is_country_type = fallen_empire
+			is_country_type = awakened_fallen_empire
+			is_country_type = enclave
+			is_country_type = nomad
+			is_country_type = dormant_marauders
+			is_country_type = awakened_marauders
+			# ACOT
+			is_country_type = original_empire
+			is_country_type = original_empire_passive
+			is_country_type = original_empire_active
+			is_country_type = sofe_light_seeker
+		}
+	}
+}
+
+is_autocracy = { #Power of one
+	OR = {
+		has_ethic = ethic_gestalt_consciousness
+		has_authority = auth_imperial
+		has_authority = auth_dictatorial
+		# More Authorities
+		has_authority = auth_corporate_imperial
+		AND = {
+			has_authority = auth_democratic_dictatorship
+			is_authoritarian = yes
+		}
+		# Expanded Traits, Civics, Pops, and More
+		has_authority = auth_private
+		# More Corporate Authorities
+		has_authority = auth_corporate_fiefdom
+	}
+}
+
+is_democracy = { #Power of many
+	OR = {
+		has_authority = auth_democratic
+		AND = {
+			has_authority = auth_corporate
+			is_egalitarian = yes
+		}
+		# More Authorities
+		has_authority = auth_strict_democratic
+		has_authority = auth_direct_democratic # Also used by Stellaris Evolved
+		AND = {
+			has_authority = auth_democratic_dictatorship
+			is_egalitarian = yes
+		}
+		# Expanded Traits, Civics, Pops, and More
+		has_authority = auth_cooperative
+	}
+}
+
+is_valid_refugee_pop = {
+	is_robot_pop = no
+	NOR = {
+		has_trait = trait_hive_mind
+		has_trait = trait_nerve_stapled
+		has_trait = trait_zombie
+		# Expanded Gestalts
+		has_trait = trait_machine_digital
+	}
+	owner = {
+		any_relation = {
+			merg_is_default_empire = yes
+			has_communications = prev #relations include countries that have made first contact but not established comms
+			OR = {
+				NOT = { has_policy_flag = refugees_not_allowed }
+				# Expanded Gestalts
+				has_valid_civic = civic_mutualistic_behavior
+			}
+			prevprev = { #this ensures Pop scope, as root will not always be pop scope
+				OR = {
+					has_citizenship_type = { type = citizenship_full country = prev }
+					has_citizenship_type = { type = citizenship_caste_system country = prev }
+					AND = {
+						has_citizenship_type = { type = citizenship_limited country = prev }
+						has_citizenship_type = { type = citizenship_caste_system_limited country = prev }
+						prev = { has_policy_flag = refugees_allowed }
+					}
+					# Expanded Gestalts
+					prev = { has_valid_civic = civic_mutualistic_behavior }
+				}
+			}
+			any_owned_planet = {
+				is_under_colonization = no
+				is_controlled_by = owner
+				has_orbital_bombardment = no
+			}
+		}
+	}
+}
+
+has_any_habitability = {
+	merg_is_default_empire = yes
+	has_communications = prev
+	OR = {
+		NOT = { has_policy_flag = refugees_not_allowed }
+		# Expanded Gestalts
+		has_valid_civic = civic_mutualistic_behavior
+	} 
+	event_target:refugee_pop = {
+		OR = { 
+			has_citizenship_type = { type = citizenship_full country = prev }
+			has_citizenship_type = { type = citizenship_caste_system country = prev }
+			AND = {
+				has_citizenship_type = { type = citizenship_limited country = prev }
+				has_citizenship_type = { type = citizenship_caste_system_limited country = prev }
+				prev = { has_policy_flag = refugees_allowed }
+			}	
+			# Expanded Gestalts
+			prev = { has_valid_civic = civic_mutualistic_behavior }
+		}		
+	}	
+	any_owned_planet = {
+		is_under_colonization = no
+		is_controlled_by = owner
+		has_orbital_bombardment = no
+	}
+}
+
+has_phototrophic_energy_upkeep = {
+	OR = {
+		has_trait = trait_plantoid_phototrophic
+		AND = {
+			OR = {
+				has_trait = trait_plantoid_radiotrophic
+				has_trait = trait_harvested_radiotrophic
+			}
+			NOR = {
+				planet = { is_planet_class = pc_nuked }
+				# Planetary Diversity
+				planet = { is_planet_class = pc_irradiated }
+				# Galaxius
+				planet = { is_planet_class = pc_ie_gateway }
+				# Giga Diversity
+				planet = { is_planet_class = pc_katzenland }
+				# Real Space
+				planet = { is_planet_class = pc_depleted }
+			}
+		}
+	}
+}
+
+# Overwriting with vanilla for a correct use of the triggers
+is_wet = {
+	has_climate = wet
+}
+
+is_dry = {
+	has_climate = dry
+	NOT = { is_planet_class = pc_city }
+}
+
+is_cold = {
+	has_climate = cold
+}
+
+# Merging and fixing
+default_endgame_early_start_triggers = {
+	OR = {
+		NOT = {
+			any_country = {
+				OR = {
+					merg_is_fallen_empire = yes
+					merg_is_awakened_fe = yes
+				}
+			}
+		}
+		has_global_flag = no_war_in_heaven
+		AND = {
+			has_global_flag = war_in_heaven_started
+			OR = {
+				has_global_flag = war_in_heaven_ended
+				NOT = { has_global_flag = war_in_heaven_recently_started }
+			}
+		}
+		# ACOT
+		AND = {
+			has_acot = yes
+			OR = {
+				has_global_flag = acot_dangerous_forbidden
+				NOR = {
+					has_global_flag = acot_war_in_hell_active
+					has_global_flag = active_sofe_crisis
+				}
+			}
+		}
+	}
+}
